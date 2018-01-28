@@ -34,7 +34,7 @@ class Keep(object):
     #.获取文章内容
     def  getContents(self,uri,type,jsStr):
         self.contents = requests.get(uri,self.header)
-        if type==1 :
+        if type == 1 :
             self.contents = self.contents.text.replace(jsStr, '').replace(');', '')
             self.contents = json.loads(self.contents)
         else :
@@ -104,5 +104,5 @@ class Keep(object):
     def load(self,jsonDir):
         with open(jsonDir) as json_file:
             data = json.load(json_file)
-            return data
+        return data
 
