@@ -1,11 +1,11 @@
 {
-	"linkUri": "http://v2.sohu.com/public-api/feed?scene=TAG&sceneId=@tabId&page=@page&size=20&callback=jQuery11240660399006967872_1511945623992&_=1511945624031",
-	"xpath": "//article[@class='article']//text() | //*[@class='article']//img/@src  | //iframe//@src  | //*[@class='article']/div/p/img/@src",
-	"checkUri": "https://api.xiaomatv.cn/Action/checkArticle?title=@title&type=@type&nature=@nature",
+	"linkUri":      "http://v2.sohu.com/public-api/feed?scene=TAG&sceneId=@tabId&page=@page&size=20&callback=jQuery11240660399006967872_1511945623992&_=1511945624031",
+	"xpath":        "//article[@class='article']//text() | //*[@class='article']//img/@src  | //iframe//@src  | //*[@class='article']/div/p/img/@src",
+	"checkUri":     "https://api.xiaomatv.cn/Action/checkArticle?title=@title&type=@type&nature=@nature",
 	"articleTable": "t_article",
-	"table": "t_article_html",
-	"type": "66",
-	"nature": "66",
+	"table":        "t_article_html",
+	"type":         "66",
+	"nature":       "66",
 	"jsStr":"/**/jQuery11240660399006967872_1511945623992(",
      "ids":[
           66196,
