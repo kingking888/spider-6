@@ -6,3 +6,8 @@ from  core.Single import Singleton
 from  core.Mongo  import Mongo
 
 """
+from  production.Find  import Find
+
+x = Find()
+y = x.load('config/spider.json')
+x.startWork(y[2])
