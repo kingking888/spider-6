@@ -1,0 +1,75 @@
+[
+  {
+    "linkUri": "http://news.bitauto.com/wenhua/c1107/?pageindex=@page",
+    "xpath": "//div[@id='openimg_articlecontent']//text() | //*[@id='openimg_articlecontent']//img/@src    | //*[@id='openimg_articlecontent']/div/p/img/@src",
+    "checkUri": "https://apipre.xiaomatv.cn/V3/Article/checkArticle?title=@title&type=@type&nature=@nature",
+    "articleTable": "t_article",
+    "table": "t_article_html",
+    "type": "11",
+    "nature": "1"
+  },
+  {
+    "linkUri": "http://news.bitauto.com/wenhua/c1179/?pageindex=@page",
+    "xpath": "//div[@id='openimg_articlecontent']//text() | //*[@id='openimg_articlecontent']//img/@src    | //*[@id='openimg_articlecontent']/div/p/img/@src",
+    "checkUri": "https://apipre.xiaomatv.cn/V3/Article/checkArticle?title=@title&type=@type&nature=@nature",
+    "articleTable": "t_article",
+    "table": "t_article_html",
+    "type": "11",
+    "nature": "2"
+  },
+  {
+    "linkUri": "http://news.bitauto.com/wenhua/c1108/?pageindex=@page",
+    "xpath": "//div[@id='openimg_articlecontent']//text() | //*[@id='openimg_articlecontent']//img/@src    | //*[@id='openimg_articlecontent']/div/p/img/@src",
+    "checkUri": "https://apipre.xiaomatv.cn/V3/Article/checkArticle?title=@title&type=@type&nature=@nature",
+    "articleTable": "t_article",
+    "table": "t_article_html",
+    "type": "11",
+    "nature": "31"
+  },
+  {
+    "linkUri": "http://news.bitauto.com/wenhua/c1180/?pageindex=@page",
+    "xpath": "//div[@id='openimg_articlecontent']//text() | //*[@id='openimg_articlecontent']//img/@src    | //*[@id='openimg_articlecontent']/div/p/img/@src",
+    "checkUri": "https://apipre.xiaomatv.cn/V3/Article/checkArticle?title=@title&type=@type&nature=@nature",
+    "articleTable": "t_article",
+    "table": "t_article_html",
+    "type": "11",
+    "nature": "3"
+  },
+  {
+    "linkUri": "http://news.bitauto.com/wenhua/c1181/?pageindex=@page",
+    "xpath": "//div[@id='openimg_articlecontent']//text() | //*[@id='openimg_articlecontent']//img/@src    | //*[@id='openimg_articlecontent']/div/p/img/@src",
+    "checkUri": "https://apipre.xiaomatv.cn/V3/Article/checkArticle?title=@title&type=@type&nature=@nature",
+    "articleTable": "t_article",
+    "table": "t_article_html",
+    "type": "11",
+    "nature": "12"
+  },
+  {
+    "linkUri": "http://news.bitauto.com/wenhua/c1044/?pageindex=@page",
+    "xpath": "//div[@id='openimg_articlecontent']//text() | //*[@id='openimg_articlecontent']//img/@src    | //*[@id='openimg_articlecontent']/div/p/img/@src",
+    "checkUri": "https://apipre.xiaomatv.cn/V3/Article/checkArticle?title=@title&type=@type&nature=@nature",
+    "articleTable": "t_article",
+    "table": "t_article_html",
+    "type": "11",
+    "nature": "32"
+  },
+  {
+    "linkUri": "http://news.bitauto.com/wenhua/c1062/?pageindex=@page",
+    "xpath": "//div[@id='openimg_articlecontent']//text() | //*[@id='openimg_articlecontent']//img/@src    | //*[@id='openimg_articlecontent']/div/p/img/@src",
+    "checkUri": "https://apipre.xiaomatv.cn/V3/Article/checkArticle?title=@title&type=@type&nature=@nature",
+    "articleTable": "t_article",
+    "table": "t_article_html",
+    "type": "11",
+    "nature": "5"
+  },
+  {
+    "linkUri": "http://news.bitauto.com/wenhua/c1063/?pageindex=@page",
+    "xpath": "//div[@id='openimg_articlecontent']//text() | //*[@id='openimg_articlecontent']//img/@src    | //*[@id='openimg_articlecontent']/div/p/img/@src",
+    "checkUri": "https://apipre.xiaomatv.cn/V3/Article/checkArticle?title=@title&type=@type&nature=@nature",
+    "articleTable": "t_article",
+    "table": "t_article_html",
+    "type": "11",
+    "nature": "5"
+  }
+
+]
