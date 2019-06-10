@@ -2,9 +2,8 @@
 #-引入依赖
 import requests
 import json
-#from   lxml import etree
-from   core.Single import Singleton
-
+from Single import Singleton
+from lxml import etree
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -16,10 +15,14 @@ from   core.Single import Singleton
 """
 
 class Query(object):
+    #.设置类型
+    __metaclass__ = Singleton
     #.请求头部
-    header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36'}
+    header = {
+        'User-Agent': '﻿Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+    }
     #.文本对象
-    contents=''
+    contents = ''
     """
     #####################################################
     # 方法:: Query ::getAPI
@@ -38,7 +41,8 @@ class Query(object):
     """
     def getAPI(self,url,type = 'text',clearStart = '',clearLastd = ''):
         try:
-            self.contents = requests.get(url, self.header)
+            self.contents = requests.get(url, self.header).content
+            contents = ''
             if   type == 'json':
                 ##--存在需要清空的字符串
                 if len(clearStart) >= 1 and len(clearLastd) >= 1:
@@ -74,9 +78,9 @@ class Query(object):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def getHTML(self,url,type = 0):
+    def getHTML(self,url):
         try:
-            self.contents = requests.get(url, self.header)
+            self.contents = requests.get(url, self.header).content
             htmls = etree.HTML(self.contents)
             return htmls
         except Exception, e:

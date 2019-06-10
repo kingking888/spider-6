@@ -14,7 +14,9 @@ from Single import Singleton
 # --------------------------------------------------
 """
 
-class Mongo(Singleton):
+class Mongo(object):
+    #.设置类型
+    __metaclass__ = Singleton
     #.定义只读对象
     dbRead  = object
     #.定义只写对象

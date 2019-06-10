@@ -1,7 +1,5 @@
 # -*- coding:utf-8 -*-
-
-import MySQLdb
-
+import pymysql
 from Single import Singleton
 
 """
@@ -13,7 +11,9 @@ from Single import Singleton
 # 时间：2017-11-30
 # --------------------------------------------------
 """
-class  DBase(Singleton):
+class  DBase(object):
+    #.设置类型
+    __metaclass__ = Singleton
     #.定义链接对象
     dbConn = None
     """
@@ -36,13 +36,13 @@ class  DBase(Singleton):
     """
     def __init__(self,config = {}) :
         #.初始化链接对象
-        self.dbConn = MySQLdb.connect(
-            user  = config['userName'],
-            port  = 3306,
-            passwd= config['passWord'],
-            host  = config['localHost'],
-            db    = config['dataName'],
-            charset='utf8'
+        self.dbConn = pymysql.connect(
+            user    = config['userName'],
+            port    = 3306,
+            passwd  = config['passWord'],
+            host    = config['localHost'],
+            db      = config['dataName'],
+            charset = 'utf8'
         )
     """
     #####################################################
@@ -65,7 +65,7 @@ class  DBase(Singleton):
         try:
             cur.execute(self.__getInsertStr(tableName,mapx))
             self.dbConn.commit()
-            insertId=cur.lastrowid
+            insertId = cur.lastrowid
             cur.close()
             return insertId
         except:
@@ -199,9 +199,9 @@ class  DBase(Singleton):
     获取删除SQL语句 | 私有
     """
     def __getDeleteStr(self,table,where):
-        sql="DELETE FROM "+table+" WHERE   @where"
-        wi=0
-        whereStr=''
+        sql = "DELETE FROM " + table + " WHERE   @where"
+        wi = 0
+        whereStr = ''
         for x in where:
             if wi!=0 :
                 whereStr += '   AND    '+str(x) +"="+"'"+str(where[x])+"'"

@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 #-引入依赖
 import hashlib
+import json
 from   urllib      import unquote
 from   core.DBase  import DBase
 from   core.Query  import Query
-
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -15,8 +15,9 @@ from   core.Query  import Query
 # --------------------------------------------------
 """
 
-class Insert(object):
+class ProducerDao(object):
     db = object
+    
     """
     # 初始化方法
     """
@@ -24,9 +25,9 @@ class Insert(object):
         self.db = DBase(config)
     """
     #####################################################
-    # 方法:: Query ::getAPI
+    # 方法:: ProducerDao :: article
     # ---------------------------------------------------
-    # 描述:: 获取API接口
+    # 描述:: 保存文章接口
     # ---------------------------------------------------
     # 参数:
     # param1:in--   string : url  :: 请求地址
@@ -71,7 +72,7 @@ class Insert(object):
             pass
     """
     #####################################################
-    # 方法:: Query ::getAPI
+    # 方法:: ProducerDao :: video
     # ---------------------------------------------------
     # 描述:: 获取API接口
     # ---------------------------------------------------
@@ -117,9 +118,9 @@ class Insert(object):
             pass
     """
     #####################################################
-    # 方法:: Query ::getAPI
+    # 方法:: ProducerDao :: check
     # ---------------------------------------------------
-    # 描述:: 获取API接口
+    # 描述:: 检测是否存在
     # ---------------------------------------------------
     # 参数:
     # param1:in--   string : url  :: 请求地址
@@ -145,9 +146,9 @@ class Insert(object):
             pass
     """
     #####################################################
-    # 方法:: Query ::getAPI
+    # 方法:: ProducerDao :: aHtml
     # ---------------------------------------------------
-    # 描述:: 获取API接口
+    # 描述:: 文章段落处理
     # ---------------------------------------------------
     # 参数:
     # param1:in--   string : url  :: 请求地址
@@ -169,8 +170,8 @@ class Insert(object):
             for x in tree :
                 if len(x) <= 0 : continue
                 html = {
-                    "sort" : i,
-                    "html" : x,
+                    "sort"    : i,
+                    "html"    : x,
                     "text_id" : articleId
                 }
                 if fiexd['image']    in x :
@@ -189,3 +190,22 @@ class Insert(object):
             return None
         finally:
             pass
+    """
+    #####################################################
+    # 方法:: ProducerDao :: load
+    # ---------------------------------------------------
+    # 描述:: 读取配置文件
+    # ---------------------------------------------------
+    # 参数:
+    # param1:in--   string : jsonDir  :: 配置地址
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def load(self,jsonDir):
+        with open(jsonDir) as json_file:
+            data = json.load(json_file)
+            return data
