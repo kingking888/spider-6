@@ -149,7 +149,7 @@ class  DBase(object):
         try:
             cur.execute(sqlStr)
             self.dbConn.commit()
-            result=cur.fetchall()
+            result = cur.fetchall()
             cur.close()
             return  result
         except:

@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 #-引入依赖
 import hashlib
-import json
-from   urllib      import unquote
-from   core.DBase  import DBase
-from   core.Query  import Query
+from   urllib         import unquote
+from   systems.DBase  import DBase
+from   systems.Query  import Query
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -16,6 +15,7 @@ from   core.Query  import Query
 """
 
 class ProducerDao(object):
+
     db = object
     
     """
@@ -45,7 +45,7 @@ class ProducerDao(object):
             hash = hashlib.md5()
             hash.update(title.encode(encoding='utf-8'))
             hashi = hash.hexdigest()
-            if (self.check(url, hashi, type, nature)): return 0
+            if (self.check('article',hashi)): return 0
             max = {
                 "title"         : title,
                 "cover_pic"     : data[fiexd['cover_pic']],
@@ -74,7 +74,7 @@ class ProducerDao(object):
     #####################################################
     # 方法:: ProducerDao :: video
     # ---------------------------------------------------
-    # 描述:: 获取API接口
+    # 描述:: 保存视频信息
     # ---------------------------------------------------
     # 参数:
     # param1:in--   string : url  :: 请求地址
@@ -92,7 +92,7 @@ class ProducerDao(object):
             hash = hashlib.md5()
             hash.update(title.encode(encoding='utf-8'))
             hashi = hash.hexdigest()
-            if (self.check(url,hashi,type,nature)) : return 0
+            if (self.check("video",hashi)) : return 0
             max = {
                 "title"         : title,
                 "cover_pic"     : data[fiexd['cover_pic']],
@@ -132,11 +132,10 @@ class ProducerDao(object):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def check(cls,url,hash,type,nature)   :
+    def check(cls,table,hash)   :
         try:
-            url = url.replace("@title",hash).replace("@type",type).replace("@nature",nature)
-            res = Query.getAPI(url)
-            if res == '1':
+            count = cls.db.SELECT("SELECT COUNT(1) NUM FROM " + table +  "  WHERE hash = '" + hash)
+            if count[0]['NUM'] >  0 :
                 return True
             else :
                 return False
@@ -190,22 +189,3 @@ class ProducerDao(object):
             return None
         finally:
             pass
-    """
-    #####################################################
-    # 方法:: ProducerDao :: load
-    # ---------------------------------------------------
-    # 描述:: 读取配置文件
-    # ---------------------------------------------------
-    # 参数:
-    # param1:in--   string : jsonDir  :: 配置地址
-    # ---------------------------------------------------
-    # 返回：
-    # return:out--  obejct : content
-    # ---------------------------------------------------
-    # 日期:2018.01.12  Add by zwx
-    #####################################################
-    """
-    def load(self,jsonDir):
-        with open(jsonDir) as json_file:
-            data = json.load(json_file)
-            return data
