@@ -8,14 +8,16 @@ from Single import Singleton
 # --------------------------------------------------
 # 描述：爬虫数据库基础操作类
 # --------------------------------------------------
-# 时间：2017-11-30
+# 时间：2019-01-01
 # --------------------------------------------------
 """
 class  DBase(object):
     #.设置类型
     __metaclass__ = Singleton
+
     #.定义链接对象
     dbConn = None
+
     """
     #####################################################
     # 方法:: DBase ::__init__
@@ -44,6 +46,7 @@ class  DBase(object):
             db      = config['dataName'],
             charset = 'utf8'
         )
+
     """
     #####################################################
     # 方法:: DBase :: insert
@@ -72,6 +75,7 @@ class  DBase(object):
             cur.close()
         finally:
             cur.close()
+
     """
     #####################################################
     # 方法:: DBase :: update
@@ -101,6 +105,7 @@ class  DBase(object):
             cur.close()
         finally:
             cur.close()
+
     """
     #####################################################
     # 方法:: DBase :: delete
@@ -129,6 +134,7 @@ class  DBase(object):
             cur.close()
         finally:
             cur.close()
+
     """
     #####################################################
     # 方法:: DBase :: select
@@ -156,6 +162,7 @@ class  DBase(object):
             cur.close()
         finally:
             cur.close()
+
     """
     获取插入SQL语句 | 私有
     """
@@ -173,6 +180,7 @@ class  DBase(object):
                 vals += "'"+ str(mapx[x]) + "'"
             i=i+1
         return sql.replace('@keys',keys).replace('@vals',vals)
+
     """
     获取更新SQL语句 | 私有
     """
@@ -195,6 +203,7 @@ class  DBase(object):
                 valueStr += str(x) + "=" + "'" + str(valuex[x]) + "'"
             wi=wi+1
         return sql.replace('@where', whereStr).replace('@value', valueStr)
+
     """
     获取删除SQL语句 | 私有
     """

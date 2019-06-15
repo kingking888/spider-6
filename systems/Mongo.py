@@ -10,7 +10,7 @@ from Single import Singleton
 # --------------------------------------------------
 # 描述：爬虫数据库基础操作类
 # --------------------------------------------------
-# 时间：2017-11-30
+# 时间：2019-01-01
 # --------------------------------------------------
 """
 
@@ -19,8 +19,10 @@ class Mongo(object):
     __metaclass__ = Singleton
     #.定义只读对象
     dbRead  = object
+
     #.定义只写对象
     dbWrite = object
+
     """
     #####################################################
     # 方法:: Mongo ::__init__
@@ -40,6 +42,7 @@ class Mongo(object):
     def __init__(self,config = {}) :
         self.dbRead  = pymongo.MongoClient(config['readLink'])
         self.dbWrite = pymongo.MongoClient(config['writeLink'])
+
     """
     #####################################################
     # 方法:: Mongo :: SELECTONE
@@ -69,6 +72,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: SELECTALL
@@ -98,6 +102,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: INSERTONE
@@ -124,6 +129,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: INSERTALL
@@ -150,6 +156,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: UPDATEONE
@@ -177,6 +184,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: UPDATEALL
@@ -204,6 +212,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: DELETEONE
@@ -230,6 +239,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: DELETEALL
@@ -256,6 +266,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: DELETEALL
@@ -282,6 +293,7 @@ class Mongo(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法:: Mongo :: DELETEALL

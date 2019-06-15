@@ -1,0 +1,6 @@
+{
+  "accessKey"    : "accessKey",
+  "secretKey"    : "secretKey",
+  "bucketName"   : "bucketName",
+  "resDomain"    : ""
+}

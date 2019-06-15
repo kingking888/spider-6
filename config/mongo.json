@@ -1,4 +1,4 @@
 {
-  "readLink"  : "",
-  "writeLink" : ""
+  "readLink"  : "mongodb://shopshops_test:shopshops_test2019@test.shopshopslive.com:3717/shopshops_test",
+  "writeLink" : "mongodb://shopshops_test:shopshops_test2019@test.shopshopslive.com:3717/shopshops_test"
 }
