@@ -25,13 +25,13 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo ::__init__
+    # 方法: Mongo :__init__
     # ---------------------------------------------------
-    # 描述:: 数据库类初始化方法
+    # 描述: 数据库类初始化方法
     # ---------------------------------------------------
     # 参数:
-    # param1:in--   String : readLink  :: 只读连接
-    # param2:in--   String : writeLink :: 只写连接
+    # param1:in--   String : readLink  : 只读连接
+    # param2:in--   String : writeLink : 只写连接
     # ---------------------------------------------------
     # 返回：
     # return:out--  无
@@ -45,20 +45,20 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: SELECTONE
+    # 方法: Mongo : SELECTONE
     # --------------------------------------------------
-    # 描述:: 数据库查询方法
+    # 描述: 数据库查询方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tabelName  :: 表名
-    # param3:in--   Map    : where      :: 条件
-    # param4:in--   Map    : order      :: 排序
-    # param5:in--   Map    : limit      :: 截取
-    # param6:in--   Map    : fixed      :: 字段
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tabelName  : 表名
+    # param3:in--   Map    : where      : 条件
+    # param4:in--   Map    : order      : 排序
+    # param5:in--   Map    : limit      : 截取
+    # param6:in--   Map    : fixed      : 字段
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -75,20 +75,20 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: SELECTALL
+    # 方法: Mongo : SELECTALL
     # --------------------------------------------------
-    # 描述:: 数据库修改方法
+    # 描述: 数据库修改方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tabelName  :: 表名
-    # param3:in--   Map    : where      :: 条件
-    # param4:in--   Map    : order      :: 排序
-    # param5:in--   Map    : limit      :: 截取
-    # param6:in--   Map    : fixed      :: 字段
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tabelName  : 表名
+    # param3:in--   Map    : where      : 条件
+    # param4:in--   Map    : order      : 排序
+    # param5:in--   Map    : limit      : 截取
+    # param6:in--   Map    : fixed      : 字段
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -105,17 +105,17 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: INSERTONE
+    # 方法: Mongo : INSERTONE
     # --------------------------------------------------
-    # 描述:: 数据库插入方法
+    # 描述: 数据库插入方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tabelName  :: 表名
-    # param3:in--   Map    : data       :: 条件
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tabelName  : 表名
+    # param3:in--   Map    : data       : 条件
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -132,17 +132,17 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: INSERTALL
+    # 方法: Mongo : INSERTALL
     # --------------------------------------------------
-    # 描述:: 数据库插入方法
+    # 描述: 数据库插入方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tabelName  :: 表名
-    # param3:in--   Array  : data       :: 条件
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tabelName  : 表名
+    # param3:in--   Array  : data       : 条件
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -159,18 +159,18 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: UPDATEONE
+    # 方法: Mongo : UPDATEONE
     # --------------------------------------------------
-    # 描述:: 数据库更新方法
+    # 描述: 数据库更新方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tabelName  :: 表名
-    # param3:in--   Array  : where      :: 条件
-    # param4:in--   Map    : data       :: 数据
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tabelName  : 表名
+    # param3:in--   Array  : where      : 条件
+    # param4:in--   Map    : data       : 数据
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -187,18 +187,18 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: UPDATEALL
+    # 方法: Mongo : UPDATEALL
     # --------------------------------------------------
-    # 描述:: 数据库修改方法
+    # 描述: 数据库修改方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tabelName  :: 表名
-    # param3:in--   Array  : where      :: 条件
-    # param4:in--   Map    : data       :: 数据
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tabelName  : 表名
+    # param3:in--   Array  : where      : 条件
+    # param4:in--   Map    : data       : 数据
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -215,17 +215,17 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: DELETEONE
+    # 方法: Mongo : DELETEONE
     # --------------------------------------------------
-    # 描述:: 数据库删除方法
+    # 描述: 数据库删除方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tabelName  :: 表名
-    # param3:in--   Map    : data       :: 条件
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tabelName  : 表名
+    # param3:in--   Map    : data       : 条件
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -242,17 +242,17 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: DELETEALL
+    # 方法: Mongo : DELETEALL
     # --------------------------------------------------
-    # 描述:: 数据库删除方法
+    # 描述: 数据库删除方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tableName  :: 表名
-    # param3:in--   Map    : where      :: 条件
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tableName  : 表名
+    # param3:in--   Map    : where      : 条件
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -269,17 +269,17 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: DELETEALL
+    # 方法: Mongo : DELETEALL
     # --------------------------------------------------
-    # 描述:: 数据库删除方法
+    # 描述: 数据库删除方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tableName  :: 表名
-    # param3:in--   Map    : where      :: 条件
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tableName  : 表名
+    # param3:in--   Map    : where      : 条件
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################
@@ -296,17 +296,17 @@ class Mongo(object):
 
     """
     #####################################################
-    # 方法:: Mongo :: DELETEALL
+    # 方法: Mongo : DELETEALL
     # --------------------------------------------------
-    # 描述:: 数据库删除方法
+    # 描述: 数据库删除方法
     # --------------------------------------------------
     # 参数:
-    # param1:in--   String : dataName   :: 库名
-    # param2:in--   String : tableName  :: 表名
-    # param3:in--   Map    : where      :: 条件
+    # param1:in--   String : dataName   : 库名
+    # param2:in--   String : tableName  : 表名
+    # param3:in--   Map    : where      : 条件
     # --------------------------------------------------
     # 返回：
-    # return:out--  Int : rows :: 受影响记录行
+    # return:out--  Int : rows : 受影响记录行
     # --------------------------------------------------
     # 日期:2018.01.12  Add by zwx
     #####################################################

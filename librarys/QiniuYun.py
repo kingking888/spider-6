@@ -15,13 +15,13 @@ class QiniuYun(object):
         self.__getToken(self.name)
     """
     #####################################################
-    # 方法:: QiniuYun :: 获取上传token
+    # 方法: QiniuYun : 获取上传token
     # ---------------------------------------------------
-    # 描述:: 获取上传TOKEN
+    # 描述: 获取上传TOKEN
     # ---------------------------------------------------
     # 参数:
-    # param1:in--   string : url  :: 请求地址
-    # param2:in--   string : type :: 返回类型
+    # param1:in--   string : url  : 请求地址
+    # param2:in--   string : type : 返回类型
     # ---------------------------------------------------
     # 返回：
     # return:out--  obejct : content
@@ -33,13 +33,13 @@ class QiniuYun(object):
         self.hash = self.auth.upload_token(bucketName)
     """
     #####################################################
-    # 方法:: QiniuYun :: uploadFile
+    # 方法: QiniuYun : uploadFile
     # ---------------------------------------------------
-    # 描述:: 上传文件
+    # 描述: 上传文件
     # ---------------------------------------------------
     # 参数:
-    # param1:in--   string : url  :: 请求地址
-    # param2:in--   string : type :: 返回类型
+    # param1:in--   string : url  : 请求地址
+    # param2:in--   string : type : 返回类型
     # ---------------------------------------------------
     # 返回：
     # return:out--  obejct : content
@@ -59,13 +59,13 @@ class QiniuYun(object):
             pass
     """
     #####################################################
-    # 方法:: QiniuYun :: fetchFile
+    # 方法: QiniuYun : fetchFile
     # ---------------------------------------------------
-    # 描述:: 抓取网络资源
+    # 描述: 抓取网络资源
     # ---------------------------------------------------
     # 参数:
-    # param1:in--   string : url  :: 请求地址
-    # param2:in--   string : type :: 返回类型
+    # param1:in--   string : url  : 请求地址
+    # param2:in--   string : type : 返回类型
     # ---------------------------------------------------
     # 返回：
     # return:out--  obejct : content
