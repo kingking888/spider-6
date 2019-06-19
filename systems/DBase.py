@@ -167,19 +167,17 @@ class  DBase(object):
     获取插入SQL语句 | 私有
     """
     def __getInsertStr(self,table,mapx):
-        sql="INSERT INTO "+str(table)+"(@keys) "+"VALUE(@vals)"
-        keys=''
-        vals=''
-        i=0
+        sql ="INSERT INTO " + str(table) + " (@keys) " + " VALUE(@vals) "
+        keys = []
+        vals = []
+        i = 0
         for x in mapx:
-            if i!=0 :
-                keys += ','+str(x)
-                vals += ",'"+ str(mapx[x]) + "'"
-            else :
-                keys += str(x)
-                vals += "'"+ str(mapx[x]) + "'"
-            i=i+1
-        return sql.replace('@keys',keys).replace('@vals',vals)
+            keys.append(x)
+            if type(mapx[x]) == int :
+                vals.append("'" + str(mapx[x]) + "'")
+            else:
+                vals.append("'" +  mapx[x] + "'")
+        return sql.replace('@keys',','.join(keys)).replace('@vals',','.join(vals))
 
     """
     获取更新SQL语句 | 私有

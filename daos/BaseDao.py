@@ -42,13 +42,14 @@ class BaseDao(object):
     """
     def checkHash(self,DB = None,SQL = '',Model = None,hash = ''):
         try:
+            if type(hash) == int : hash = str(hash)
             with open(SQL) as file :
                 sql = str(file.read()).replace('@TABLE_NAME',Model.tableName).replace('@HASH',hash)
                 file.close()
             count = DB.SELECT(sql)
             num = 0
             for x in count:
-                for i in x: num = 0
+                for i in x : num = i
             if num > 0:
                 return True
             else:

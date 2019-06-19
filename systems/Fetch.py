@@ -51,7 +51,7 @@ class Fetch(object):
                     contents = self.contents.text.replace(clearStart, '').replace(clearLastd, '')
                     contents = json.loads(contents)
                 else :
-                    contents = json.loads(self.contents.json())
+                    contents = json.loads(self.contents)
             elif type == 'text':
                 if len(clearStart) >= 1 and len(clearLastd) >= 1:
                     contents = self.contents.text.replace(clearStart, '').replace(clearLastd, '')

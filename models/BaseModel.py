@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
-from systems.DBase import DBase
-from systems.Mongo import Mongo
+pass
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -29,7 +28,6 @@ class BaseModel(object):
     # 魔术方法
     """
     def __getattr__(self, name):
-        print name
         if self.check(name)  and self.arrayModel.has_key(name):
             return self.arrayModel.get(name)
         else:
@@ -41,7 +39,7 @@ class BaseModel(object):
     """
     def __setattr__(self, name, value):
         if self.check(name):
-            return self.arrayModel.setdefault(name,value)
+            self.arrayModel[name] = value
         else:
             return False
 

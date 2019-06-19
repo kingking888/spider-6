@@ -59,18 +59,17 @@ class TagDao(BaseDao):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def insert(self, type, nature, data, fiexd):
+    def insert(self,fiexd):
         try:
-            title = unquote(data[fiexd['title']].decode('gbk').encode('utf-8'))
-            hash = data[fiexd['hash']]
-            if (self.check(hash)): return 0
+            hash = fiexd['hash']
+            if (self.check(hash)) : return 0
             tag             = TagModel()
-            tag.title       = title
-            tag.cover_pic   = data[fiexd['cover_pic']]
-            tag.description = data[fiexd['description']]
+            tag.title       = fiexd['title']
+            tag.cover_pic   = fiexd['cover_pic']
+            tag.description = fiexd['description']
             tag.hash        = hash
-            tag.type        = type
-            tag.nature      = nature
+            tag.type        = fiexd['type']
+            tag.nature      = fiexd['nature']
             tag.create_time = int(time.time())
             tag.modify_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             tag.operator    = "SYSTEM"

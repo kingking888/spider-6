@@ -24,6 +24,7 @@ class TagModel(BaseModel):
             "id",
             "title",
             "cover_pic",
+            "description",
             "hash",
             "type",
             "nature",
