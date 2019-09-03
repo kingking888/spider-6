@@ -22,7 +22,7 @@ class BaseModel(object):
             index = 0
             for i in data :
                 self.arrayModel[self.fiexdModel[index]] = i
-                index+=1
+                index += 1
 
     """
     # 魔术方法

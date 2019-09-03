@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import pymysql
+from urllib import unquote
 from Single import Singleton
 
 """
@@ -172,11 +173,17 @@ class  DBase(object):
         vals = []
         i = 0
         for x in mapx:
-            keys.append(x)
+            if x == 'id' : continue
+            print mapx[x]
+            keys.append('`' + x + '`')
             if type(mapx[x]) == int :
                 vals.append("'" + str(mapx[x]) + "'")
-            else:
-                vals.append("'" +  mapx[x] + "'")
+            elif type(mapx[x]) == None :
+                vals.append('NULL')
+            elif type(mapx[x]) == unicode :
+                vals.append("'" + mapx[x].encode(encoding='utf-8') + "'")
+            elif type(mapx[x]) == str :
+                vals.append("'" + mapx[x] + "'")
         return sql.replace('@keys',','.join(keys)).replace('@vals',','.join(vals))
 
     """

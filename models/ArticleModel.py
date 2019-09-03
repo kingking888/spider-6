@@ -19,22 +19,22 @@ class ArticleModel(BaseModel):
     # 初始化方法
     """
     def __init__(self, data = None):
-        super(ArticleModel,self).__init__(data)
         BaseModel.fiexdModel = [
-        "id",
-        "title",
-        "cover_pic",
-        "link_url",
-        "user_nickname",
-        "user_pic",
-        "hash",
-        "type",
-        "nature",
-        "create_time",
-        "status",
-        "operator",
-        "modify_time",
-        "version",
-        "reamrk"
-    ]
+            "id",
+            "title",
+            "cover_pic",
+            "link_url",
+            "user_nickname",
+            "user_pic",
+            "hash",
+            "type",
+            "nature",
+            "create_time",
+            "status",
+            "operator",
+            "modify_time",
+            "version",
+            "reamrk"
+        ]
+        super(ArticleModel, self).__init__(data)
 

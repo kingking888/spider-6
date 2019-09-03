@@ -61,7 +61,7 @@ class TagDao(BaseDao):
     """
     def insert(self,fiexd):
         try:
-            hash = fiexd['hash']
+            hash = str(fiexd['hash'])
             if (self.check(hash)) : return 0
             tag             = TagModel()
             tag.title       = fiexd['title']
@@ -80,3 +80,28 @@ class TagDao(BaseDao):
             return None
         finally:
             pass
+    """
+    #####################################################
+    # 方法: TagDao : select
+    # ---------------------------------------------------
+    # 描述: 检测是否存在
+    # ---------------------------------------------------
+    # 参数:
+    # param:in--   Object : object  : 方法参数
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def select(self,order = 'create_time DESC',pageNum = 1,pageSize = 20):
+        """./sqls/selectTag.sql"""
+        data = self.selectTable(
+            self.db, self.select.__doc__, order,(pageNum - 1)*pageSize,pageSize
+        )
+        result = []
+        for x in data : result.append(
+            TagModel(x).arrayModel
+        )
+        return result

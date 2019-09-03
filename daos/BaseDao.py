@@ -44,10 +44,9 @@ class BaseDao(object):
         try:
             if type(hash) == int : hash = str(hash)
             with open(SQL) as file :
-                sql = str(file.read()).replace('@TABLE_NAME',Model.tableName).replace('@HASH',hash)
+                sql = str(file.read()).replace('@TABLE_NAME',Model.tableName).replace('@HASH',str(hash))
                 file.close()
             count = DB.SELECT(sql)
-            num = 0
             for x in count:
                 for i in x : num = i
             if num > 0:
@@ -78,5 +77,30 @@ class BaseDao(object):
             return self.db.INSERT(Model.tableName, Model.get())
         except:
             return 0
+        finally:
+            pass
+    """
+    #####################################################
+    # 方法: Base : selectTable
+    # ---------------------------------------------------
+    # 描述: 查询数据表
+    # ---------------------------------------------------
+    # 参数:
+    # param:in--   Object : object  : 方法参数
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def selectTable(self,DB = None,SQL = '',ORDER = '', START = 0, LASTD = 20):
+        try:
+            with open(SQL) as file :
+                sql = str(file.read()).replace('@ORDER',ORDER).replace('@START',str(START)).replace('@LASTD',str(LASTD))
+                file.close()
+            return DB.SELECT(sql)
+        except:
+            return False
         finally:
             pass

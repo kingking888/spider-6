@@ -19,7 +19,6 @@ class TagModel(BaseModel):
     # 初始化方法
     """
     def __init__(self, data = None):
-        super(TagModel,self).__init__(data)
         BaseModel.fiexdModel = [
             "id",
             "title",
@@ -33,5 +32,6 @@ class TagModel(BaseModel):
             "operator",
             "modify_time",
             "version",
-            "reamrk"
+            "remark"
         ]
+        super(TagModel, self).__init__(data)

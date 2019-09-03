@@ -11,7 +11,7 @@ from models.BaseModel  import  BaseModel
 # 时间：2019-01-01
 # --------------------------------------------------
 """
-class VideoModel(object):
+class VideoModel(BaseModel):
 
     tableName = 't_video'
 
@@ -19,24 +19,31 @@ class VideoModel(object):
     # 初始化方法
     """
     def __init__(self, data = None):
-        super(VideoModel,self).__init__(data)
         BaseModel.fiexdModel = [
-        "id",
-        "tag_id",
-        "video_id",
-        "title",
-        "cover_pic",
-        "video_url",
-        "video_info",
-        "user_nickname",
-        "user_pic",
-        "hash",
-        "type",
-        "nature",
-        "create_time",
-        "status",
-        "operator",
-        "modify_time",
-        "version",
-        "reamrk"
-    ]
+            "id",
+            "tag_id",
+            "video_id",
+            "user_pic",
+            "user_desc",
+            "user_nickname",
+            "hash",
+            "title",
+            "type",
+            "nature",
+            "height",
+            "width",
+            "video_url",
+            "video_size",
+            "description",
+            "video_style",
+            "video_duration",
+            "cover_pic",
+            "create_time",
+            "grad_time",
+            "status",
+            "operator",
+            "modify_time",
+            "version",
+            "remark"
+        ]
+        super(VideoModel, self).__init__(data)

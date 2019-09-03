@@ -39,29 +39,31 @@ class VideoDao(BaseDao):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def insert(self, type, nature, data, fiexd):
+    def insert(self,type,nature,fiexd):
         try:
-            title = unquote(data[fiexd['title']].decode('gbk').encode('utf-8'))
-            hash = hashlib.md5()
-            hash.update(title.encode(encoding='utf-8'))
-            hashi = hash.hexdigest()
-            if (self.check(hashi)): return 0
+            if (self.check(fiexd['hash'])): return 0
             video = VideoModel()
-            video.title         = title
-            video.tag_id        = data[fiexd['tag_id']]
-            video.cover_pic     = data[fiexd['cover_pic']]
-            video.video_url     = data[fiexd['video_url']]
-            video.video_info    = data[fiexd['video_info']]
-            video.user_nickname = data[fiexd['user_nickname']],
-            video.user_pic      = data[fiexd['user_pic']]
-            video.hash          = hashi,
-            video.video_id      = data[fiexd['video_id']],
-            video.type          = type,
+            video.title         = fiexd['title']
+            video.tag_id        = fiexd['tag_id']
+            video.cover_pic     = fiexd['cover_pic']
+            video.video_url     = fiexd['video_url']
+            video.description   = fiexd['description']
+            video.user_nickname = fiexd['user_nickname']
+            video.user_pic      = fiexd['user_pic']
+            video.user_desc     = fiexd['user_desc']
+            video.hash          = fiexd['hash']
+            video.video_id      = fiexd['video_id']
+            video.height        = fiexd['height']
+            video.width         = fiexd['width']
+            video.size          = fiexd['size']
+            video.duration      = fiexd['duration']
+            video.type          = type
             video.nature        = nature
             video.status        = 5
             video.create_time   = int(time.time())
             video.modify_time   = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            video.operator      = "producer"
+            video.operator      = "SYSTEM"
+            video.version       = 1
             video.remark        = ''
             return self.add(video)
         except Exception,e:
