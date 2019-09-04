@@ -77,7 +77,31 @@ class QiniuYun(object):
         try:
             ret, info = BucketManager(self.auth).fetch(fileUrl,self.name,key)
             assert ret['key'] == key
-            return info
+            return ret
+        except Exception, e:
+            return None
+        finally:
+            pass
+    """
+    #####################################################
+    # 方法: QiniuYun : changeImage
+    # ---------------------------------------------------
+    # 描述: 改变图片类型
+    # ---------------------------------------------------
+    # 参数:
+    # param1:in--   string : key  : 文件名
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def changeImage(self,key):
+        try:
+            ret, info = BucketManager(self.auth).change_mime(self.name, key, 'image/jpg')
+            assert ret['key'] == key
+            return ret
         except Exception, e:
             return None
         finally:

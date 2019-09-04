@@ -1,9 +1,7 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
-import hashlib
 import time
 import datetime
-from urllib import unquote
 from models.VideoModel import VideoModel
 from daos.BaseDao import BaseDao
 """
@@ -26,7 +24,7 @@ class VideoDao(BaseDao):
         super(VideoDao, self).__init__(DBase, Mongo)
     """
     #####################################################
-    # 方法: TagDao : video
+    # 方法: VideoDao video
     # ---------------------------------------------------
     # 描述: 保存视频信息
     # ---------------------------------------------------
@@ -56,7 +54,7 @@ class VideoDao(BaseDao):
             video.height        = fiexd['height']
             video.width         = fiexd['width']
             video.size          = fiexd['size']
-            video.duration      = fiexd['duration']
+            video.video_duration= fiexd['duration']
             video.type          = type
             video.nature        = nature
             video.status        = 5
@@ -73,7 +71,7 @@ class VideoDao(BaseDao):
 
     """
     #####################################################
-    # 方法: TagDao : check
+    # 方法: VideoDao check
     # ---------------------------------------------------
     # 描述: 检测是否存在
     # ---------------------------------------------------
@@ -89,3 +87,47 @@ class VideoDao(BaseDao):
     def check(self,hash):
         """./sqls/checkHash.sql"""
         return self.checkHash(self.db,self.check.__doc__,VideoModel(),hash)
+
+    """
+    #####################################################
+    # 方法: VideoDao select
+    # ---------------------------------------------------
+    # 描述: 检测是否存在
+    # ---------------------------------------------------
+    # 参数:
+    # param:in--   Object : object  : 方法参数
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def select(self,order = 'create_time ASC',pageNum = 1,pageSize = 20):
+        """./sqls/selectVideo.sql"""
+        data = self.selectTable(
+            self.db, self.select.__doc__, order,(pageNum - 1)*pageSize,pageSize
+        )
+        result = []
+        for x in data : result.append(
+            VideoModel(x).arrayModel.copy()
+        )
+        return result
+    """
+    #####################################################
+    # 方法: VideoDao : update
+    # ---------------------------------------------------
+    # 描述: 更新数据
+    # ---------------------------------------------------
+    # 参数:
+    # param:in--   Object : object  : 方法参数
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def update(self,id,data):
+        return  self.save(VideoModel,id,data)
+

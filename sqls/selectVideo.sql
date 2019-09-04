@@ -1,0 +1,1 @@
+SELECT * FROM t_video WHERE status = 5 AND grad_time IS NULL ORDER BY @ORDER LIMIT @START,@LASTD

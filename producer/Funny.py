@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 #-引入依赖
 from systems.Fetch import Fetch
+import time
+import datetime
 from daos.VideoDao import VideoDao
 from daos.TagDao   import TagDao
 class Funny(object):
@@ -73,12 +75,13 @@ class Funny(object):
     def getTagVideoList(self,page = 100):
         data = self.TagDao.select('id ASC',1,10000)
         for item in data :
+            print item['hash']
             for i in range(0, page):
                 urix = self.tagVideoList.replace('@PageNum', str(i)).replace('@TagId', str(item['hash']))
                 links = Fetch().getAPI(urix, 'json')
                 for x in links['data']['data'] :
                     if x['item']['video'] == None :
-                        print "IS NOT VIDEO"
+                        print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']  IS NOT VIDEO'
                         continue
                     fiexd = {}
                     fiexd['title']              = x['item']['video']['text']
@@ -96,4 +99,15 @@ class Funny(object):
                     fiexd['size']               = 0
                     fiexd['duration']           = x['item']['video']['duration']
                     self.VideoDao.insert(1,1,fiexd)
+    """
+        获取视频数据
+    """
+    def getVideoList(self,pageSize = 1000):
+        return self.VideoDao.select('id ASC',1,pageSize)
+
+    """
+        修改视频数据
+    """
+    def updateVideo(self,id,data):
+        self.VideoDao.update(id,data)
 

@@ -3,7 +3,6 @@
 import hashlib
 import time
 import datetime
-from urllib import unquote
 from models.TagModel import TagModel
 from daos.BaseDao import BaseDao
 """
@@ -102,6 +101,6 @@ class TagDao(BaseDao):
         )
         result = []
         for x in data : result.append(
-            TagModel(x).arrayModel
+            TagModel(x).arrayModel.copy()
         )
         return result

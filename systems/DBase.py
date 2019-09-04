@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import pymysql
 from urllib import unquote
+import time
+import datetime
 from Single import Singleton
 
 """
@@ -45,7 +47,7 @@ class  DBase(object):
             passwd  = config['passWord'],
             host    = config['localHost'],
             db      = config['dataName'],
-            charset = 'utf8'
+            charset = 'utf8mb4'
         )
 
     """
@@ -70,6 +72,7 @@ class  DBase(object):
             cur.execute(self.__getInsertStr(tableName,mapx))
             self.dbConn.commit()
             insertId = cur.lastrowid
+            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']  INSERT ONCE VIDEO:' + str(insertId)
             cur.close()
             return insertId
         except:
@@ -174,7 +177,6 @@ class  DBase(object):
         i = 0
         for x in mapx:
             if x == 'id' : continue
-            print mapx[x]
             keys.append('`' + x + '`')
             if type(mapx[x]) == int :
                 vals.append("'" + str(mapx[x]) + "'")
@@ -182,6 +184,8 @@ class  DBase(object):
                 vals.append('NULL')
             elif type(mapx[x]) == unicode :
                 vals.append("'" + mapx[x].encode(encoding='utf-8') + "'")
+            elif type(mapx[x]) == float :
+                vals.append("'" + str(mapx[x]) + "'")
             elif type(mapx[x]) == str :
                 vals.append("'" + mapx[x] + "'")
         return sql.replace('@keys',','.join(keys)).replace('@vals',','.join(vals))
@@ -196,7 +200,7 @@ class  DBase(object):
         valueStr=''
         for x in where:
             if wi!=0 :
-                whereStr += '   AND    '+str(x) +"="+"'"+str(where[x])+"'"
+                whereStr += ' AND ' + str(x) + "=" + "'" + str(where[x]) + "'"
             else :
                 whereStr += str(x) + "=" + "'" + str(where[x]) + "'"
             wi=wi+1
