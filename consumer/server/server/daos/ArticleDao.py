@@ -4,10 +4,10 @@ import hashlib
 import time
 import datetime
 from urllib import unquote
-from systems.Fetch import Fetch
-from daos.BaseDao import BaseDao
-from models.ArticleHtmlModel import ArticleHtmlModel
-from models.ArticleModel import ArticleModel
+from consumer.server.server.systems.Fetch import Fetch
+from consumer.server.server.daos.BaseDao import BaseDao
+from consumer.server.server.models.ArticleHtmlModel import ArticleHtmlModel
+from consumer.server.server.models.ArticleModel import ArticleModel
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -86,7 +86,7 @@ class ArticleDao(BaseDao):
     #####################################################
     """
     def check(self,hash):
-        """./sqls/checkHash.sql"""
+        """./consumer/server/server/sqls/checkHash.sql"""
         return self.checkHash(self.db,self.check.__doc__,ArticleModel(),hash)
 
     """

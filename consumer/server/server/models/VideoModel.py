@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
-from models.BaseModel  import  BaseModel
+from consumer.server.server.models import  BaseModel
 
 """
 # --------------------------------------------------
@@ -11,7 +11,7 @@ from models.BaseModel  import  BaseModel
 # 时间：2019-01-01
 # --------------------------------------------------
 """
-class VideoModel(BaseModel):
+class VideoModel(BaseModel.BaseModel):
 
     tableName = 't_video'
 
@@ -19,7 +19,7 @@ class VideoModel(BaseModel):
     # 初始化方法
     """
     def __init__(self, data = None):
-        BaseModel.fiexdModel = [
+        VideoModel.fiexdModel = [
             "id",
             "tag_id",
             "video_id",

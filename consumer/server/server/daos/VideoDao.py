@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
-import hashlib
 import time
 import datetime
-from urllib import unquote
-from models.TagModel import TagModel
+from consumer.server.server.models.VideoModel import VideoModel
+from consumer.server.server.daos.BaseDao import BaseDao
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -14,7 +13,7 @@ from models.TagModel import TagModel
 # 时间：2019-01-01
 # --------------------------------------------------
 """
-class BaseDao(object):
+class VideoDao(BaseDao):
 
     pass
 
@@ -22,12 +21,57 @@ class BaseDao(object):
     # 初始化方法
     """
     def __init__(self, DBase = None,Mongo = None):
-        self.db = DBase
-        self.mo = Mongo
+        super(VideoDao, self).__init__(DBase, Mongo)
+    """
+    #####################################################
+    # 方法: VideoDao video
+    # ---------------------------------------------------
+    # 描述: 保存视频信息
+    # ---------------------------------------------------
+    # 参数:
+    # param:in--   Object : object  : 方法参数
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def insert(self,type,nature,fiexd):
+        try:
+            if (self.check(fiexd['hash'])): return 0
+            video = VideoModel()
+            video.title         = fiexd['title']
+            video.tag_id        = fiexd['tag_id']
+            video.cover_pic     = fiexd['cover_pic']
+            video.video_url     = fiexd['video_url']
+            video.description   = fiexd['description']
+            video.user_nickname = fiexd['user_nickname']
+            video.user_pic      = fiexd['user_pic']
+            video.user_desc     = fiexd['user_desc']
+            video.hash          = fiexd['hash']
+            video.video_id      = fiexd['video_id']
+            video.height        = fiexd['height']
+            video.width         = fiexd['width']
+            video.size          = fiexd['size']
+            video.video_duration= fiexd['duration']
+            video.type          = type
+            video.nature        = nature
+            video.status        = 5
+            video.create_time   = int(time.time())
+            video.modify_time   = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            video.operator      = "SYSTEM"
+            video.version       = 1
+            video.remark        = ''
+            return self.add(video)
+        except Exception,e:
+            return None
+        finally:
+            pass
 
     """
     #####################################################
-    # 方法: Base : checkHash
+    # 方法: VideoDao check
     # ---------------------------------------------------
     # 描述: 检测是否存在
     # ---------------------------------------------------
@@ -40,76 +84,15 @@ class BaseDao(object):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def checkHash(self,DB = None,SQL = '',Model = None,hash = ''):
-        try:
-            if type(hash) == int : hash = str(hash)
-            with open(SQL) as file :
-                sql = str(file.read()).replace('@TABLE_NAME',Model.tableName).replace('@HASH',str(hash))
-                file.close()
-            count = DB.SELECT(sql)
-            for x in count:
-                for i in x : num = i
-            if num > 0:
-                return True
-            else:
-                return False
-        except:
-            return False
-        finally:
-            pass
-    """
-    #####################################################
-    # 方法: BaseDao : insert
-    # ---------------------------------------------------
-    # 描述: 保存视频信息
-    # ---------------------------------------------------
-    # 参数:
-    # param:in--   Object : object  : 方法参数
-    # ---------------------------------------------------
-    # 返回：
-    # return:out--  obejct : content
-    # ---------------------------------------------------
-    # 日期:2018.01.12  Add by zwx
-    #####################################################
-    """
-    def add(self,Model = None):
-        try:
-            return self.db.INSERT(Model.tableName, Model.get())
-        except:
-            return 0
-        finally:
-            pass
-    """
-    #####################################################
-    # 方法: Base : selectTable
-    # ---------------------------------------------------
-    # 描述: 查询数据表
-    # ---------------------------------------------------
-    # 参数:
-    # param:in--   Object : object  : 方法参数
-    # ---------------------------------------------------
-    # 返回：
-    # return:out--  obejct : content
-    # ---------------------------------------------------
-    # 日期:2018.01.12  Add by zwx
-    #####################################################
-    """
-    def selectTable(self,DB = None,SQL = '',ORDER = '', START = 0, LASTD = 20):
-        try:
-            with open(SQL) as file :
-                sql = str(file.read()).replace('@ORDER',ORDER).replace('@START',str(START)).replace('@LASTD',str(LASTD))
-                file.close()
-            return DB.SELECT(sql)
-        except:
-            return False
-        finally:
-            pass
+    def check(self,hash):
+        """./consumer/server/server/sqls/checkHash.sql"""
+        return self.checkHash(self.db,self.check.__doc__,VideoModel(),hash)
 
     """
     #####################################################
-    # 方法: BaseDao : save
+    # 方法: VideoDao select
     # ---------------------------------------------------
-    # 描述: 保存视频信息
+    # 描述: 检测是否存在
     # ---------------------------------------------------
     # 参数:
     # param:in--   Object : object  : 方法参数
@@ -120,10 +103,31 @@ class BaseDao(object):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def save(self,Model = None,id = 0,data = {}):
-        try:
-            return self.db.UPDATE(Model.tableName, {'id' : id},data)
-        except:
-            return 0
-        finally:
-            pass
+    def select(self,order = 'create_time ASC',pageNum = 1,pageSize = 20):
+        """./consumer/server/server/sqls/selectVideo.sql"""
+        data = self.selectTable(
+            self.db, self.select.__doc__, order,(pageNum - 1)*pageSize,pageSize
+        )
+        result = []
+        for x in data : result.append(
+            VideoModel(x).arrayModel.copy()
+        )
+        return result
+    """
+    #####################################################
+    # 方法: VideoDao : update
+    # ---------------------------------------------------
+    # 描述: 更新数据
+    # ---------------------------------------------------
+    # 参数:
+    # param:in--   Object : object  : 方法参数
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def update(self,id,data):
+        return  self.save(VideoModel,id,data)
+

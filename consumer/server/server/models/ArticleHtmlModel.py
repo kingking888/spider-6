@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
-from models.BaseModel  import  BaseModel
+from consumer.server.server.models import  BaseModel
 
 """
 # --------------------------------------------------
@@ -11,27 +11,19 @@ from models.BaseModel  import  BaseModel
 # 时间：2019-01-01
 # --------------------------------------------------
 """
-class TagModel(BaseModel):
+class ArticleHtmlModel(BaseModel.BaseModel):
 
-    tableName = 't_tag'
-
+    tableName = 't_article_html'
     """
     # 初始化方法
     """
     def __init__(self, data = None):
+        super(ArticleHtmlModel,self).__init__(data)
         BaseModel.fiexdModel = [
             "id",
-            "title",
-            "cover_pic",
-            "description",
-            "hash",
+            "article_id",
             "type",
-            "nature",
-            "create_time",
+            "sort",
             "status",
-            "operator",
-            "modify_time",
-            "version",
-            "remark"
+            "html"
         ]
-        super(TagModel, self).__init__(data)

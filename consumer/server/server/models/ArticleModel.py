@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
-from models.BaseModel  import  BaseModel
+from consumer.server.server.models import  BaseModel
 
 """
 # --------------------------------------------------
@@ -11,7 +11,7 @@ from models.BaseModel  import  BaseModel
 # 时间：2019-01-01
 # --------------------------------------------------
 """
-class ArticleModel(BaseModel):
+class ArticleModel(BaseModel.BaseModel):
 
     tableName = 't_article'
 
@@ -19,7 +19,7 @@ class ArticleModel(BaseModel):
     # 初始化方法
     """
     def __init__(self, data = None):
-        BaseModel.fiexdModel = [
+        ArticleModel.fiexdModel = [
             "id",
             "title",
             "cover_pic",

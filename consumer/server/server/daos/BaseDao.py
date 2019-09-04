@@ -1,10 +1,5 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
-import hashlib
-import time
-import datetime
-from models.TagModel import TagModel
-from daos.BaseDao import BaseDao
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -14,7 +9,7 @@ from daos.BaseDao import BaseDao
 # 时间：2019-01-01
 # --------------------------------------------------
 """
-class TagDao(BaseDao):
+class BaseDao(object):
 
     pass
 
@@ -22,11 +17,12 @@ class TagDao(BaseDao):
     # 初始化方法
     """
     def __init__(self, DBase = None,Mongo = None):
-        super(TagDao, self).__init__(DBase,Mongo)
+        self.db = DBase
+        self.mo = Mongo
 
     """
     #####################################################
-    # 方法: TagDao : check
+    # 方法: Base : checkHash
     # ---------------------------------------------------
     # 描述: 检测是否存在
     # ---------------------------------------------------
@@ -39,13 +35,26 @@ class TagDao(BaseDao):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def check(self,hash):
-        """./sqls/checkHash.sql"""
-        return self.checkHash(self.db,self.check.__doc__,TagModel(),hash)
-
+    def checkHash(self,DB = None,SQL = '',Model = None,hash = ''):
+        try:
+            if type(hash) == int : hash = str(hash)
+            with open(SQL) as file :
+                sql = str(file.read()).replace('@TABLE_NAME',Model.tableName).replace('@HASH',str(hash))
+                file.close()
+            count = DB.SELECT(sql)
+            for x in count:
+                for i in x : num = i
+            if num > 0:
+                return True
+            else:
+                return False
+        except:
+            return False
+        finally:
+            pass
     """
     #####################################################
-    # 方法: TagDao : insert
+    # 方法: BaseDao : insert
     # ---------------------------------------------------
     # 描述: 保存视频信息
     # ---------------------------------------------------
@@ -58,32 +67,18 @@ class TagDao(BaseDao):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def insert(self,fiexd):
+    def add(self,Model = None):
         try:
-            hash = str(fiexd['hash'])
-            if (self.check(hash)) : return 0
-            tag             = TagModel()
-            tag.title       = fiexd['title']
-            tag.cover_pic   = fiexd['cover_pic']
-            tag.description = fiexd['description']
-            tag.hash        = hash
-            tag.type        = fiexd['type']
-            tag.nature      = fiexd['nature']
-            tag.create_time = int(time.time())
-            tag.modify_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            tag.operator    = "SYSTEM"
-            tag.status      = 5
-            tag.remark      = ''
-            return self.add(tag)
-        except Exception, e:
-            return None
+            return self.db.INSERT(Model.tableName, Model.get())
+        except:
+            return 0
         finally:
             pass
     """
     #####################################################
-    # 方法: TagDao : select
+    # 方法: Base : selectTable
     # ---------------------------------------------------
-    # 描述: 检测是否存在
+    # 描述: 查询数据表
     # ---------------------------------------------------
     # 参数:
     # param:in--   Object : object  : 方法参数
@@ -94,13 +89,36 @@ class TagDao(BaseDao):
     # 日期:2018.01.12  Add by zwx
     #####################################################
     """
-    def select(self,order = 'create_time DESC',pageNum = 1,pageSize = 20):
-        """./sqls/selectTag.sql"""
-        data = self.selectTable(
-            self.db, self.select.__doc__, order,(pageNum - 1)*pageSize,pageSize
-        )
-        result = []
-        for x in data : result.append(
-            TagModel(x).arrayModel.copy()
-        )
-        return result
+    def selectTable(self,DB = None,SQL = '',ORDER = '', START = 0, LASTD = 20):
+        try:
+            with open(SQL) as file :
+                sql = str(file.read()).replace('@ORDER',ORDER).replace('@START',str(START)).replace('@LASTD',str(LASTD))
+                file.close()
+            return DB.SELECT(sql)
+        except:
+            return []
+        finally:
+            pass
+
+    """
+    #####################################################
+    # 方法: BaseDao : save
+    # ---------------------------------------------------
+    # 描述: 保存视频信息
+    # ---------------------------------------------------
+    # 参数:
+    # param:in--   Object : object  : 方法参数
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def save(self,Model = None,id = 0,data = {}):
+        try:
+            return self.db.UPDATE(Model.tableName, {'id' : id},data)
+        except:
+            return 0
+        finally:
+            pass
