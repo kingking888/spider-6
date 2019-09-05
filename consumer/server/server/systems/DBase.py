@@ -164,8 +164,9 @@ class  DBase(object):
             return  result
         except:
             cur.close()
+            return []
         finally:
-            cur.close()
+            pass
 
     """
     获取插入SQL语句 | 私有

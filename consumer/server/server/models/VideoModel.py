@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
-from consumer.server.server.models import  BaseModel
+from BaseModel import BaseModel
 
 """
 # --------------------------------------------------
@@ -11,7 +11,7 @@ from consumer.server.server.models import  BaseModel
 # 时间：2019-01-01
 # --------------------------------------------------
 """
-class VideoModel(BaseModel.BaseModel):
+class VideoModel(BaseModel):
 
     tableName = 't_video'
 

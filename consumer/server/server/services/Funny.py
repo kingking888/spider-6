@@ -1,8 +1,7 @@
 # -*- coding:utf-8 -*-
 #-引入依赖
-from consumer.server.server.systems.Fetch import Fetch
-from consumer.server.server.daos.VideoDao import VideoDao
-from consumer.server.server.daos.TagDao   import TagDao
+from daos.VideoDao import VideoDao
+from daos.TagDao   import TagDao
 class Funny(object):
     tagList        = ''
     tagVideoList   = ''
@@ -15,12 +14,13 @@ class Funny(object):
     """
     # 初始化方法
     """
-    def __init__(self,config = None,db = None,mo = None) :
+    def __init__(self,config = None,db = None,mo = None,fe = None) :
         self.tagList        = config['tagList']
         self.tagVideoList   = config['tagVideoList']
         self.tagCommentList = config['tagCommentList']
         self.TagDao         = TagDao(db,mo)
         self.VideoDao       = VideoDao(db,mo)
+        self.Fetch          = fe
         self.tagFiexdPath   = config['tagFiexd']['basePath']
         self.tagFiexdJson   = config['tagFiexd']['fiexd']
 
@@ -28,10 +28,9 @@ class Funny(object):
     # 获取标签方法
     """
     def getTagList(self,page = 100):
-        fetch = Fetch()
         for i in range(0,page):
             urix = self.tagList.replace('@PageNum',str(i))
-            data = fetch.getAPI(urix,'json')
+            data = self.Fetch.getAPI(urix,'json')
             data = self.__getTagData(data)
             data = self.__getTagMap(data)
             for item in data:
@@ -72,13 +71,12 @@ class Funny(object):
     # 获取标签方法
     """
     def getTagVideoList(self,start = 0,page = 100):
-        data = self.TagDao.select('id ASC',1,200)
-        fetch = Fetch()
+        data = self.TagDao.select('id DESC',1,200)
         for item in data :
             try:
-                for i in range(start, page):
+                for i in range(0, page):
                     urix = self.tagVideoList.replace('@PageNum', str(i)).replace('@TagId', str(item['hash']))
-                    links = fetch.getAPI(urix, 'json')
+                    links = self.Fetch.getAPI(urix, 'json')
                     for x in links['data']['data']:
                         if x['item']['video'] == None: continue
                         fiexd = {}
@@ -112,4 +110,10 @@ class Funny(object):
     """
     def updateVideo(self,id,data):
         self.VideoDao.update(id,data)
+
+    """
+        获取推荐视频
+    """
+    def getRecommend(self,pageSize = 50):
+        return self.VideoDao.recommend('ASC',1,pageSize)
 

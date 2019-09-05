@@ -16,5 +16,5 @@ Including another URLconf
 from django.conf.urls import url
 import Recommend
 urlpatterns = [
-    url('recommend/videos', Recommend.videos, name='index'),
+    url('recommend/videos', Recommend.videos, name='videos'),
 ]

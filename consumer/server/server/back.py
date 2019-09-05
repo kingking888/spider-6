@@ -2,26 +2,26 @@
 #-引入依赖
 import time
 import datetime
-from consumer.server.server.systems.Fetch     import Fetch
-from consumer.server.server.systems.DBase     import DBase
-from consumer.server.server.systems.Mongo     import Mongo
-from consumer.server.server.services.Funny    import Funny
-from consumer.server.server.librarys.QiniuYun import QiniuYun
+from systems.Fetch import Fetch
+from systems.DBase import DBase
+from systems.Mongo import Mongo
+from services.Funny import Funny
+from librarys.QiniuYun import QiniuYun
 
 """
 加载数据库配置文件
 """
 fetch  = Fetch()
-dbase  = DBase(fetch.load('./consumer/server/server/config/mysql.json'))
-mongo  = Mongo(fetch.load('./consumer/server/server/config/mongo.json'))
-funny  = fetch.load('./consumer/server/server/config/funny.json')
-config = fetch.load('./consumer/server/server/config/qiniu.json')
+dbase  = DBase(fetch.load('./config/mysql.json'))
+mongo  = Mongo(fetch.load('./config/mongo.json'))
+funny  = fetch.load('./config/funny.json')
+config = fetch.load('./config/qiniu.json')
 Qiniu  = QiniuYun(config)
 
 """
 获取抓取对象
 """
-funny = Funny(funny,dbase,mongo)
+funny = Funny(funny,dbase,mongo,fetch)
 
 
 """

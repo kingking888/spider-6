@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
-from consumer.server.server.models import  BaseModel
+from BaseModel import BaseModel
 
 """
 # --------------------------------------------------

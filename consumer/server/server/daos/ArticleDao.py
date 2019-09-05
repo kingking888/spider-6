@@ -4,10 +4,10 @@ import hashlib
 import time
 import datetime
 from urllib import unquote
-from consumer.server.server.systems.Fetch import Fetch
-from consumer.server.server.daos.BaseDao import BaseDao
-from consumer.server.server.models.ArticleHtmlModel import ArticleHtmlModel
-from consumer.server.server.models.ArticleModel import ArticleModel
+from Fetch import Fetch
+from BaseDao import BaseDao
+from models.ArticleHtmlModel import ArticleHtmlModel
+from models.ArticleModel import ArticleModel
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>

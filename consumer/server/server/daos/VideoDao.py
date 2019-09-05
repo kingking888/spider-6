@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
 import time
+import sys
 import datetime
-from consumer.server.server.models.VideoModel import VideoModel
-from consumer.server.server.daos.BaseDao import BaseDao
+from models.VideoModel import VideoModel
+from BaseDao import BaseDao
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -85,7 +86,7 @@ class VideoDao(BaseDao):
     #####################################################
     """
     def check(self,hash):
-        """./consumer/server/server/sqls/checkHash.sql"""
+        """./../server/sqls/checkHash.sql"""
         return self.checkHash(self.db,self.check.__doc__,VideoModel(),hash)
 
     """
@@ -104,7 +105,7 @@ class VideoDao(BaseDao):
     #####################################################
     """
     def select(self,order = 'create_time ASC',pageNum = 1,pageSize = 20):
-        """./consumer/server/server/sqls/selectVideo.sql"""
+        """./../server/sqls/selectVideo.sql"""
         data = self.selectTable(
             self.db, self.select.__doc__, order,(pageNum - 1)*pageSize,pageSize
         )
@@ -130,4 +131,29 @@ class VideoDao(BaseDao):
     """
     def update(self,id,data):
         return  self.save(VideoModel,id,data)
+    """
+    #####################################################
+    # 方法: VideoDao recommend
+    # ---------------------------------------------------
+    # 描述: 视频推荐
+    # ---------------------------------------------------
+    # 参数:
+    # param:in--   Object : object  : 方法参数
+    # ---------------------------------------------------
+    # 返回：
+    # return:out--  obejct : content
+    # ---------------------------------------------------
+    # 日期:2018.01.12  Add by zwx
+    #####################################################
+    """
+    def recommend(self,order = 'ASC',pageNum = 1,pageSize = 20):
+        """/Users/zhangwenxiao/iFolder/spider/consumer/server/server/sqls/selectRecommend.sql"""
+        data = self.selectTable(
+            self.db, self.recommend.__doc__, order,(pageNum - 1)*pageSize,pageSize
+        )
+        result = []
+        for x in data : result.append(
+            VideoModel(x).arrayModel.copy()
+        )
+        return result
 

@@ -2,8 +2,8 @@
 # -引入依赖
 import time
 import datetime
-from consumer.server.server.models.TagModel import TagModel
-from consumer.server.server.daos.BaseDao import BaseDao
+from models.TagModel import TagModel
+from BaseDao import BaseDao
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -39,7 +39,7 @@ class TagDao(BaseDao):
     #####################################################
     """
     def check(self,hash):
-        """./consumer/server/server/sqls/checkHash.sql"""
+        """./../server/sqls/checkHash.sql"""
         return self.checkHash(self.db,self.check.__doc__,TagModel(),hash)
 
     """
@@ -94,7 +94,7 @@ class TagDao(BaseDao):
     #####################################################
     """
     def select(self,order = 'create_time DESC',pageNum = 1,pageSize = 20):
-        """./consumer/server/server/sqls/selectTag.sql"""
+        """./../server/sqls/selectTag.sql"""
         data = self.selectTable(
             self.db, self.select.__doc__, order,(pageNum - 1)*pageSize,pageSize
         )
