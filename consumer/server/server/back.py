@@ -25,31 +25,41 @@ funny = Funny(funny,dbase,mongo,fetch)
 
 
 """
-上传视频文件
+上传视频文件 | 递归上传文件
 """
-for item in funny.getVideoList(1500) :
-    try:
-        # .上传视频
-        result = Qiniu.fetchFile(item['video_id'], item['video_url'])
-        if result['fsize'] > 0:
-            funny.updateVideo(item['id'], {
-                'grad_time': int(time.time()),
-                'video_url': 'http://' + config['resDomain'] + '/' + result['key'],
-                'video_size': result['fsize']
-            })
-        # .上传封面
-        retImg = Qiniu.fetchFile('cover_image_' + item['video_id'], item['cover_pic'])
-        if retImg['fsize'] > 0:
-            funny.updateVideo(item['id'], {
-                'cover_pic': 'http://' + config['resDomain'] + '/' + 'cover_image_' + item['video_id'] +
-                             '?imageView2/1/format/png'
-            })
-        print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] UPDATE VIDEO ID:" + str(item['id'])
-    except:
-        print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] UPDATE ERROR ID:" + str(item['id'])
-        continue
-    finally:
-        pass
+def updateQiniu():
+    data = funny.getVideoList(10)
+    if len(data) <= 0 : return True
+    for item in  data:
+        try:
+            # .上传视频
+            result = Qiniu.fetchFile(item['video_id'], item['video_url'])
+            if result['fsize'] > 0:
+                funny.updateVideo(item['id'], {
+                    'grad_time': int(time.time()),
+                    'video_url': 'http://' + config['resDomain'] + '/' + result['key'],
+                    'video_size': result['fsize']
+                })
+            # .上传封面
+            retImg = Qiniu.fetchFile('cover_image_' + item['video_id'], item['cover_pic'])
+            if retImg['fsize'] > 0:
+                funny.updateVideo(item['id'], {
+                    'cover_pic': 'http://' + config['resDomain'] + '/' + 'cover_image_' + item['video_id'] +
+                                 '?imageView2/1/format/png'
+                })
+            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] UPDATE VIDEO ID:" + str(item['id'])
+        except:
+            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] UPDATE ERROR ID:" + str(item['id'])
+            continue
+        finally:
+            pass
+        updateQiniu()
+
+"""
+上传视频文件 | 递归上传文件
+"""
+updateQiniu()
+
 
 
 

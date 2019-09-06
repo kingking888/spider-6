@@ -28,7 +28,7 @@ funny.getTagList(1)
 """
 抓取视频内容
 """
-funny.getTagVideoList(1,1)
+funny.getTagVideoList(0,10)
 
 
 

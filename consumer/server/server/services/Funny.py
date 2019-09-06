@@ -74,7 +74,7 @@ class Funny(object):
         data = self.TagDao.select('id DESC',1,200)
         for item in data :
             try:
-                for i in range(0, page):
+                for i in range(start, page):
                     urix = self.tagVideoList.replace('@PageNum', str(i)).replace('@TagId', str(item['hash']))
                     links = self.Fetch.getAPI(urix, 'json')
                     for x in links['data']['data']:
