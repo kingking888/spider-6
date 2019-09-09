@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 #-引入依赖
+import time
+import datetime
 from daos.VideoDao import VideoDao
 from daos.TagDao   import TagDao
 class Funny(object):
@@ -71,14 +73,17 @@ class Funny(object):
     # 获取标签方法
     """
     def getTagVideoList(self,start = 0,page = 100):
-        data = self.TagDao.select('id DESC',1,200)
+        data = self.TagDao.select('id DESC',1,1000)
         for item in data :
             try:
-                for i in range(start, page):
+                print item['hash']
+                for i in range(start,page):
+                    print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "]  PAGE_NUMS:" + str(
+                        item['id']) + "-" + str(i)
                     urix = self.tagVideoList.replace('@PageNum', str(i)).replace('@TagId', str(item['hash']))
                     links = self.Fetch.getAPI(urix, 'json')
                     for x in links['data']['data']:
-                        if x['item']['video'] == None: continue
+                        if x['item']['video'] == None : continue
                         fiexd = {}
                         fiexd['title'] = x['item']['video']['text']
                         fiexd['tag_id'] = item['id']
