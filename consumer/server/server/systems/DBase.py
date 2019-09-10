@@ -72,7 +72,7 @@ class  DBase(object):
             cur.execute(self.__getInsertStr(tableName,mapx))
             self.dbConn.commit()
             insertId = cur.lastrowid
-            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']  INSERT ONCE VIDEO:' + str(insertId)
+            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']  INSERT VIDEO ID:' + str(insertId)
             cur.close()
             data = mapx.copy()
             data['id'] = insertId

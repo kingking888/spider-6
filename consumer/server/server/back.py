@@ -21,7 +21,7 @@ Qiniu  = QiniuYun(config)
 """
 获取抓取对象
 """
-funny = Funny(funny,dbase,mongo,fetch)
+funny = Funny(funny,dbase,mongo,fetch,Qiniu,config)
 
 
 """

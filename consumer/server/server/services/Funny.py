@@ -102,7 +102,6 @@ class Funny(object):
                         fiexd['size']           = 0
                         fiexd['duration']       = x['item']['video']['duration']
                         once = self.VideoDao.insert(1, 1,fiexd)
-                        print once
                         if once <> 0 : self.updateQiniu(once)
             except:
                 continue
@@ -147,10 +146,10 @@ class Funny(object):
                     'cover_pic': 'http://' + self.QiConf['resDomain'] + '/' + 'cover_image_' + item['video_id'] +
                                  '?imageView2/1/format/png'
                 })
-            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] UPDATE VIDEO ID:" + str(
+            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "]  UPDATE VIDEO ID:" + str(
                 item['id'])
         except:
-            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] UPDATE ERROR ID:" + str(
+            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "]  UPDATE ERROR ID:" + str(
                 item['id'])
         finally:
             pass
