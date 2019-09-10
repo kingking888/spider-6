@@ -40,7 +40,7 @@ class VideoDao(BaseDao):
     """
     def insert(self,type,nature,fiexd):
         try:
-            if (self.check(fiexd['hash'])): return 0
+            if (self.check(fiexd['hash'])) : return 0
             video = VideoModel()
             video.title         = fiexd['title']
             video.tag_id        = fiexd['tag_id']
@@ -147,7 +147,7 @@ class VideoDao(BaseDao):
     #####################################################
     """
     def recommend(self,order = 'ASC',pageNum = 1,pageSize = 20):
-        """/Users/zhangwenxiao/iFolder/spider/consumer/server/server/sqls/selectRecommend.sql"""
+        """/home/spider/consumer/server/server/sqls/selectRecommend.sql"""
         data = self.selectTable(
             self.db, self.recommend.__doc__, order,(pageNum - 1)*pageSize,pageSize
         )

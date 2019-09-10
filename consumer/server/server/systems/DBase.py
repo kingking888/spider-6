@@ -74,7 +74,9 @@ class  DBase(object):
             insertId = cur.lastrowid
             print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']  INSERT ONCE VIDEO:' + str(insertId)
             cur.close()
-            return insertId
+            data = mapx.copy()
+            data['id'] = insertId
+            return data
         except:
             cur.close()
         finally:

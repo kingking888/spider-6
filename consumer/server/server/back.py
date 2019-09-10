@@ -28,7 +28,7 @@ funny = Funny(funny,dbase,mongo,fetch)
 上传视频文件 | 递归上传文件
 """
 def updateQiniu():
-    data = funny.getVideoList(10)
+    data = funny.getVideoList(1)
     if len(data) <= 0 : return True
     for item in  data:
         try:

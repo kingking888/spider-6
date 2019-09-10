@@ -16,13 +16,15 @@ class Funny(object):
     """
     # 初始化方法
     """
-    def __init__(self,config = None,db = None,mo = None,fe = None) :
+    def __init__(self,config = None,db = None,mo = None,fe = None,qi = None,qiconf = None) :
         self.tagList        = config['tagList']
         self.tagVideoList   = config['tagVideoList']
         self.tagCommentList = config['tagCommentList']
         self.TagDao         = TagDao(db,mo)
         self.VideoDao       = VideoDao(db,mo)
         self.Fetch          = fe
+        self.Qiniu          = qi
+        self.QiConf         = qiconf
         self.tagFiexdPath   = config['tagFiexd']['basePath']
         self.tagFiexdJson   = config['tagFiexd']['fiexd']
 
@@ -73,7 +75,7 @@ class Funny(object):
     # 获取标签方法
     """
     def getTagVideoList(self,start = 0,page = 100):
-        data = self.TagDao.select('id DESC',1,1000)
+        data = self.TagDao.select('id ASC',1,1000)
         for item in data :
             try:
                 print item['hash']
@@ -85,21 +87,23 @@ class Funny(object):
                     for x in links['data']['data']:
                         if x['item']['video'] == None : continue
                         fiexd = {}
-                        fiexd['title'] = x['item']['video']['text']
-                        fiexd['tag_id'] = item['id']
-                        fiexd['cover_pic'] = x['item']['video']['cover_image']['url_list'][0]['url']
-                        fiexd['video_url'] = x['item']['video']['video_high']['url_list'][0]['url']
-                        fiexd['description'] = ''
-                        fiexd['user_nickname'] = x['item']['author']['name']
-                        fiexd['user_pic'] = x['item']['author']['avatar']['download_list'][0]['url']
-                        fiexd['user_desc'] = x['item']['author']['description']
-                        fiexd['hash'] = x['cell_id']
-                        fiexd['video_id'] = x['item']['video']['video_id']
-                        fiexd['height'] = x['item']['video']['video_high']['height']
-                        fiexd['width'] = x['item']['video']['video_high']['width']
-                        fiexd['size'] = 0
-                        fiexd['duration'] = x['item']['video']['duration']
-                        self.VideoDao.insert(1, 1, fiexd)
+                        fiexd['title']          = x['item']['video']['text']
+                        fiexd['tag_id']         = item['id']
+                        fiexd['cover_pic']      = x['item']['video']['cover_image']['url_list'][0]['url']
+                        fiexd['video_url']      = x['item']['video']['video_high']['url_list'][0]['url']
+                        fiexd['description']    = ''
+                        fiexd['user_nickname']  = x['item']['author']['name']
+                        fiexd['user_pic']       = x['item']['author']['avatar']['download_list'][0]['url']
+                        fiexd['user_desc']      = x['item']['author']['description']
+                        fiexd['hash']           = x['cell_id']
+                        fiexd['video_id']       = x['item']['video']['video_id']
+                        fiexd['height']         = x['item']['video']['video_high']['height']
+                        fiexd['width']          = x['item']['video']['video_high']['width']
+                        fiexd['size']           = 0
+                        fiexd['duration']       = x['item']['video']['duration']
+                        once = self.VideoDao.insert(1, 1,fiexd)
+                        print once
+                        if once <> 0 : self.updateQiniu(once)
             except:
                 continue
             finally:
@@ -121,4 +125,34 @@ class Funny(object):
     """
     def getRecommend(self,pageSize = 50):
         return self.VideoDao.recommend('ASC',1,pageSize)
+
+    """
+    上传视频文件 | 递归上传文件
+    """
+
+    def updateQiniu(self,item):
+        try:
+            # .上传视频
+            result = self.Qiniu.fetchFile(item['video_id'], item['video_url'])
+            if result['fsize'] > 0:
+                self.updateVideo(item['id'], {
+                    'grad_time': int(time.time()),
+                    'video_url': 'http://' + self.QiConf['resDomain'] + '/' + result['key'],
+                    'video_size': result['fsize']
+                })
+            # .上传封面
+            retImg = self.Qiniu.fetchFile('cover_image_' + item['video_id'], item['cover_pic'])
+            if retImg['fsize'] > 0:
+                self.updateVideo(item['id'], {
+                    'cover_pic': 'http://' + self.QiConf['resDomain'] + '/' + 'cover_image_' + item['video_id'] +
+                                 '?imageView2/1/format/png'
+                })
+            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] UPDATE VIDEO ID:" + str(
+                item['id'])
+        except:
+            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] UPDATE ERROR ID:" + str(
+                item['id'])
+        finally:
+            pass
+
 
