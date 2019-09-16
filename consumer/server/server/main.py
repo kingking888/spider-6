@@ -31,4 +31,4 @@ funny = Funny(funny,dbase,mongo,fetch,Qiniu,config)
 抓取标签文件
 """
 
-funny.getTagVideoList(0,1)
+funny.getTagVideoList(0,1000)

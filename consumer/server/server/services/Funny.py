@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 #-引入依赖
 import time
+import traceback 
 import datetime
 from daos.VideoDao import VideoDao
 from daos.TagDao   import TagDao
@@ -77,36 +78,38 @@ class Funny(object):
     def getTagVideoList(self,start = 0,page = 100):
         data = self.TagDao.select('id ASC',1,1000)
         for item in data :
-            try:
                 print item['hash']
                 for i in range(start,page):
-                    print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "]  PAGE_NUMS:" + str(
-                        item['id']) + "-" + str(i)
-                    urix = self.tagVideoList.replace('@PageNum', str(i)).replace('@TagId', str(item['hash']))
-                    links = self.Fetch.getAPI(urix, 'json')
-                    for x in links['data']['data']:
-                        if x['item']['video'] == None : continue
-                        fiexd = {}
-                        fiexd['title']          = x['item']['video']['text']
-                        fiexd['tag_id']         = item['id']
-                        fiexd['cover_pic']      = x['item']['video']['cover_image']['url_list'][0]['url']
-                        fiexd['video_url']      = x['item']['video']['video_high']['url_list'][0]['url']
-                        fiexd['description']    = ''
-                        fiexd['user_nickname']  = x['item']['author']['name']
-                        fiexd['user_pic']       = x['item']['author']['avatar']['download_list'][0]['url']
-                        fiexd['user_desc']      = x['item']['author']['description']
-                        fiexd['hash']           = x['cell_id']
-                        fiexd['video_id']       = x['item']['video']['video_id']
-                        fiexd['height']         = x['item']['video']['video_high']['height']
-                        fiexd['width']          = x['item']['video']['video_high']['width']
-                        fiexd['size']           = 0
-                        fiexd['duration']       = x['item']['video']['duration']
-                        once = self.VideoDao.insert(1, 1,fiexd)
-                        if once <> 0 : self.updateQiniu(once)
-            except:
-                continue
-            finally:
-                pass
+                    try:
+                        print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "]  PAGE_NUMS:" + str(
+                            item['id']) + "-" + str(i)
+                        urix = self.tagVideoList.replace('@PageNum', str(i)).replace('@TagId', str(item['hash']))
+                        links = self.Fetch.getAPI(urix, 'json')
+                        if (links is None) : continue
+                        for x in links['data']['data']:
+                            if x['item']['video'] == None : continue
+                            fiexd = {}
+                            fiexd['title']          = x['item']['video']['text']
+                            fiexd['tag_id']         = item['id']
+                            fiexd['cover_pic']      = x['item']['video']['cover_image']['url_list'][0]['url']
+                            fiexd['video_url']      = x['item']['video']['video_high']['url_list'][0]['url']
+                            fiexd['description']    = ''
+                            fiexd['user_nickname']  = x['item']['author']['name']
+                            fiexd['user_pic']       = x['item']['author']['avatar']['download_list'][0]['url']
+                            fiexd['user_desc']      = x['item']['author']['description']
+                            fiexd['hash']           = x['cell_id']
+                            fiexd['video_id']       = x['item']['video']['video_id']
+                            fiexd['height']         = x['item']['video']['video_high']['height']
+                            fiexd['width']          = x['item']['video']['video_high']['width']
+                            fiexd['size']           = 0
+                            fiexd['duration']       = x['item']['video']['duration']
+                            once = self.VideoDao.insert(1, 1,fiexd)
+                            if once <> 0 : self.updateQiniu(once)
+                    except Exception, e:
+                    	traceback.print_exc()
+                        continue
+                    finally:
+                        pass
     """
         获取视频数据
     """

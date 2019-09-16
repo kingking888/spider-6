@@ -19,7 +19,7 @@ class Fetch(object):
     __metaclass__ = Singleton
     #.请求头部
     header = {
-        'User-Agent': '﻿Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
     }
 
     #.文本对象
@@ -43,7 +43,7 @@ class Fetch(object):
     """
     def getAPI(self,url,type = 'text',clearStart = '',clearLastd = ''):
         try:
-            self.contents = requests.get(url, self.header).content
+            self.contents = requests.get(url, self.header,timeout=2).content
             contents = ''
             if   type == 'json':
                 ##--存在需要清空的字符串

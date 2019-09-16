@@ -11,7 +11,7 @@ mongo  = Mongo(fetch.load('./server/config/mongo.json'))
 funny  = fetch.load('./server/config/funny.json')
 def videos(request):
     global funny
-    service = Funny(funny, dbase, mongo,fetch)
+    service = Funny(funny, dbase, mongo,fetch,None,None)
     data = service.getRecommend(12)
     for i in range(0,len(data)):
         data[i]['share_count'] = random.randint(500,2000)
