@@ -53,7 +53,7 @@ class QiniuYun(object):
             assert ret['key']  == key
             assert ret['hash'] == etag(fileDir)
             return info
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -78,7 +78,7 @@ class QiniuYun(object):
             ret, info = BucketManager(self.auth).fetch(fileUrl,self.name,key)
             assert ret['key'] == key
             return ret
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -102,7 +102,7 @@ class QiniuYun(object):
             ret, info = BucketManager(self.auth).change_mime(self.name, key, 'image/jpg')
             assert ret['key'] == key
             return ret
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass

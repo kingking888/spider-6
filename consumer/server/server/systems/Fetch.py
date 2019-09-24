@@ -2,8 +2,8 @@
 #-引入依赖
 import requests
 import json
+import lxml.etree
 from Single import Singleton
-from lxml   import etree
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -19,7 +19,7 @@ class Fetch(object):
     __metaclass__ = Singleton
     #.请求头部
     header = {
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+        'User-Agent': 'okhttp/3.12.3'
     }
 
     #.文本对象
@@ -42,11 +42,16 @@ class Fetch(object):
     #####################################################
     """
     def getAPI(self,url,type = 'text',clearStart = '',clearLastd = ''):
+        headers = {
+            'Cache-Control':"no-cache",
+            'User-Agent':"PostmanRuntime/7.6.1",
+            'Postman-Token':"ec149f45-d193-4a84-b699-134fdd53c745"
+        }
         try:
-            self.contents = requests.get(url, self.header,timeout=2).content
+            self.contents = requests.request("GET", url,headers=headers,timeout=(5, 10)).content
             contents = ''
             if   type == 'json':
-                ##--存在需要清空的字符串
+                #--存在需要清空的字符串
                 if len(clearStart) >= 1 and len(clearLastd) >= 1:
                     contents = self.contents.text.replace(clearStart, '').replace(clearLastd, '')
                     contents = json.loads(contents)
@@ -60,7 +65,7 @@ class Fetch(object):
             else :
                 pass
             return contents
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -86,7 +91,7 @@ class Fetch(object):
             self.contents = requests.get(url, self.header).content
             htmls = etree.HTML(self.contents)
             return htmls
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass

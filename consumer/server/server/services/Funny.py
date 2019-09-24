@@ -76,7 +76,7 @@ class Funny(object):
     # 获取标签方法
     """
     def getTagVideoList(self,start = 0,page = 100):
-        data = self.TagDao.select('id ASC',1,1000)
+        data = self.TagDao.select('id DESC',1,1000)
         for item in data :
                 print item['hash']
                 for i in range(start,page):
@@ -105,8 +105,8 @@ class Funny(object):
                             fiexd['duration']       = x['item']['video']['duration']
                             once = self.VideoDao.insert(1, 1,fiexd)
                             if once <> 0 : self.updateQiniu(once)
-                    except Exception, e:
-                    	traceback.print_exc()
+                    except Exception as e:
+                        traceback.print_exc()
                         continue
                     finally:
                         pass

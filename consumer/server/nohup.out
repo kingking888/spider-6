@@ -38,31 +38,31 @@ Traceback (most recent call last):
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/base.py", line 124, in get_response
     response = self._middleware_chain(request)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 43, in inner
-    response = response_for_exception(request, exc)
+    response = response_for_exception(request as exc)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 83, in response_for_exception
     response = debug.technical_500_response(request, *sys.exc_info(), status_code=400)
   File "/usr/lib/python2.7/site-packages/django_extensions/management/technical_response.py", line 37, in null_technical_500_response
-    six.reraise(exc_type, exc_value, tb)
+    six.reraise(exc_type as exc_value, tb)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
   File "/usr/lib64/python2.7/site-packages/django/utils/deprecation.py", line 140, in __call__
     response = self.get_response(request)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 43, in inner
-    response = response_for_exception(request, exc)
+    response = response_for_exception(request as exc)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 83, in response_for_exception
     response = debug.technical_500_response(request, *sys.exc_info(), status_code=400)
   File "/usr/lib/python2.7/site-packages/django_extensions/management/technical_response.py", line 37, in null_technical_500_response
-    six.reraise(exc_type, exc_value, tb)
+    six.reraise(exc_type as exc_value, tb)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
   File "/usr/lib64/python2.7/site-packages/django/utils/deprecation.py", line 140, in __call__
     response = self.get_response(request)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 43, in inner
-    response = response_for_exception(request, exc)
+    response = response_for_exception(request as exc)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 83, in response_for_exception
     response = debug.technical_500_response(request, *sys.exc_info(), status_code=400)
   File "/usr/lib/python2.7/site-packages/django_extensions/management/technical_response.py", line 37, in null_technical_500_response
-    six.reraise(exc_type, exc_value, tb)
+    six.reraise(exc_type as exc_value, tb)
   File "/usr/lib64/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
   File "/usr/lib64/python2.7/site-packages/django/utils/deprecation.py", line 138, in __call__

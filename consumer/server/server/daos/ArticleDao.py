@@ -65,7 +65,7 @@ class ArticleDao(BaseDao):
             article.operator      = "producer"
             article.remark        = ''
             return self.add(article)
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -129,7 +129,7 @@ class ArticleDao(BaseDao):
                     continue
                 finally:
                     pass
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass

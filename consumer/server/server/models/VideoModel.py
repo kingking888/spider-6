@@ -13,7 +13,7 @@ from BaseModel import BaseModel
 """
 class VideoModel(BaseModel):
 
-    tableName = 't_video'
+    tableName = 't_videos'
 
     """
     # 初始化方法

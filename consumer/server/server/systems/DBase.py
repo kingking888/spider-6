@@ -1,7 +1,5 @@
 # -*- coding:utf-8 -*-
 import pymysql
-from urllib import unquote
-import time
 import datetime
 from Single import Singleton
 

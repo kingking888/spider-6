@@ -1,6 +1,6 @@
 {
-  "userName"  : "myroot",
-  "passWord"  : "JUdianSQL1024",
-  "localHost" : "rm-2ze3il5x25222vb46qo.mysql.rds.aliyuncs.com",
+  "userName"  : "ssadmin",
+  "passWord"  : "shopshops2019#",
+  "localHost" : "rm-2ze967w9aaqpae2e0ko.mysql.rds.aliyuncs.com",
   "dataName"  : "spider"
 }

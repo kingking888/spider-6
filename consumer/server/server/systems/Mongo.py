@@ -68,7 +68,7 @@ class Mongo(object):
             mongo  = self.dbRead[dataName][tableName]
             result = mongo.find_one(where,fixed).sort(order).skip(limit[0]).limit(limit[1])
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -98,7 +98,7 @@ class Mongo(object):
             mongo  = self.dbRead[dataName][tableName]
             result = mongo.find(where,fixed).sort(order).skip(limit[0]).limit(limit[1])
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -125,7 +125,7 @@ class Mongo(object):
             mongo  = self.dbWrite[dataName][tabelName]
             result = mongo.insert(data)
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -152,7 +152,7 @@ class Mongo(object):
             mongo  = self.dbWrite[dataName][tabelName]
             result = mongo.insert_many(data)
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -180,7 +180,7 @@ class Mongo(object):
             mongo  = self.dbWrite[dataName][tableName]
             result = mongo.update_one(where,data)
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -208,7 +208,7 @@ class Mongo(object):
             mongo  = self.dbWrite[dataName][tableName]
             result = mongo.update_many(where,data)
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -235,7 +235,7 @@ class Mongo(object):
             mongo  = self.dbWrite[dataName][tableName]
             result = mongo.delete_one(where)
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -262,7 +262,7 @@ class Mongo(object):
             mongo  = self.dbWrite[dataName][tableName]
             result = mongo.delete_many(where)
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -289,7 +289,7 @@ class Mongo(object):
             mongo  = self.dbRead[dataName][tableName]
             result = mongo.find(where).count()
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
@@ -316,7 +316,7 @@ class Mongo(object):
             mongo  = self.dbWrite[dataName][tableName]
             result = mongo.drop()
             return result
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass

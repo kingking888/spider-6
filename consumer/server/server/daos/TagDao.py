@@ -74,7 +74,7 @@ class TagDao(BaseDao):
             tag.status      = 5
             tag.remark      = ''
             return self.add(tag)
-        except Exception, e:
+        except Exception as e:
             return None
         finally:
             pass
