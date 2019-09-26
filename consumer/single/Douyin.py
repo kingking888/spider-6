@@ -66,7 +66,7 @@ DB = DBase(DBConf)
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def getHTML(url):
@@ -92,7 +92,7 @@ def getHTML(url):
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def load(jsonDir):
@@ -112,7 +112,7 @@ def load(jsonDir):
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def checkVideo(awemeId):
@@ -136,7 +136,7 @@ def checkVideo(awemeId):
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def insertVideo(userId,fname,uri,cover,awemeId,height,width,size,filePath,dytk):
@@ -205,7 +205,7 @@ def insertVideo(userId,fname,uri,cover,awemeId,height,width,size,filePath,dytk):
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def download(mediumType, uri, mediumUrl, targetFolder, fname,userId,height,width,cover,awemeId,dytk):
@@ -257,7 +257,7 @@ def download(mediumType, uri, mediumUrl, targetFolder, fname,userId,height,width
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def getRealAddress(url):
@@ -277,7 +277,7 @@ def getRealAddress(url):
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def getDytk(url):
@@ -312,7 +312,7 @@ def getDytk(url):
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def usage():
@@ -335,7 +335,7 @@ def usage():
 # 返回：
 # return:out--  obejct : content
 # ---------------------------------------------------
-# 日期:2018.01.12  Add by zwx
+# 日期:2019.09.09  Add by zwx
 #####################################################
 """
 def parseSites(fileName):
@@ -352,7 +352,13 @@ def parseSites(fileName):
     return numbers
 
 """
-下载执行的类
+# --------------------------------------------------
+# 作者：Mr.z@<837045534@qq.com>
+# --------------------------------------------------
+# 描述：抖音数据爬取类
+# --------------------------------------------------
+# 时间：2019-09-09
+# --------------------------------------------------
 """
 class CrawlerScheduler(object):
     def __init__(self, items):
@@ -384,44 +390,44 @@ class CrawlerScheduler(object):
     启动程序
     """
     def scheduling(self):
-        for url in self.numbers: self.download_user_videos(url)
-        for url in self.challenges: self.download_challenge_videos(url)
-        for url in self.musics: self.download_music_videos(url)
+        for url in self.numbers: self.downloadUserVideos(url)
+        for url in self.challenges: self.downloadChallengeVideos(url)
+        for url in self.musics: self.downloadMusicVideos(url)
 
     """
     下载用户VIDEO
     """
-    def download_user_videos(self, url):
+    def downloadUserVideos(self, url):
         number = re.findall(r'share/user/(\d+)', url)
         if not len(number): return
         data = getDytk(url)
         print("[" + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] 已经获取的口令： \n%s" % str(data))
         if not data['dytk']: return
         user_id = number[0]
-        self._download_user_media(user_id,data,url)
+        self._downloadUserMedia(user_id,data,url)
 
     """
     下载合拍视频
     """
-    def download_challenge_videos(self, url):
+    def downloadChallengeVideos(self, url):
         challenge = re.findall('share/challenge/(\d+)', url)
         if not len(challenge): return
         challenges_id = challenge[0]
-        self._download_challenge_media(challenges_id, url)
+        self._downloadChallengeMedia(challenges_id, url)
 
     """
     下载音乐视频
     """
-    def download_music_videos(self, url):
+    def downloadMusicVideos(self, url):
         music = re.findall('share/music/(\d+)', url)
         if not len(music): return
         musics_id = music[0]
-        self._download_music_media(musics_id, url)
+        self._downloadMusicMedia(musics_id, url)
 
     """
     放入下载队列 | 已经改为顺序执行
     """
-    def _join_download_queue(self, aweme,targetFolder,userId,dytk):
+    def _joinDownloadQueue(self, aweme,targetFolder,userId,dytk):
         try:
             if aweme.get('video', None):
                 uri     = aweme['video']['play_addr']['uri']
@@ -444,7 +450,7 @@ class CrawlerScheduler(object):
     """
     下载其他媒体
     """
-    def __download_favorite_media(self, user_id, dytk, hostname, signature, favorite_folder, video_count):
+    def __downloadFavoriteMedia(self, user_id, dytk, hostname, signature, favorite_folder, video_count):
         if not os.path.exists(favorite_folder):
             os.makedirs(favorite_folder)
         favorite_video_url = "https://%s/aweme/v1/aweme/favorite/" % hostname
@@ -465,7 +471,7 @@ class CrawlerScheduler(object):
             favorite_list = contentJson.get('aweme_list', [])
             for aweme in favorite_list:
                 try:
-                    self._join_download_queue(aweme, favorite_folder, user_id)
+                    self._joinDownloadQueue(aweme, favorite_folder, user_id)
                 except BaseException as err:
                     raise err
                 video_count += 1
@@ -479,7 +485,7 @@ class CrawlerScheduler(object):
     """
     下载用户媒体
     """
-    def _download_user_media(self, user_id, dytk, url):
+    def _downloadUserMedia(self, user_id, dytk, url):
         current_folder = os.getcwd()
         targetFolder = os.path.join(current_folder, 'download/%s' % user_id)
         if not os.path.isdir(targetFolder):
@@ -509,7 +515,7 @@ class CrawlerScheduler(object):
                 len(aweme_list)
             ) + "个视频资源")
             for aweme in aweme_list:
-                self._join_download_queue(aweme, targetFolder,user_id,dytk)
+                self._joinDownloadQueue(aweme, targetFolder,user_id,dytk)
             if contentJson.get('has_more'):
                 max_cursor = contentJson.get('max_cursor')
             else:
@@ -517,9 +523,9 @@ class CrawlerScheduler(object):
         return video_count
 
     """
-    下载合拍媒体
+    下载挑战媒体
     """
-    def _download_challenge_media(self, challenge_id, url):
+    def _downloadChallengeMedia(self, challenge_id, url):
         if not challenge_id : return
         current_folder = os.getcwd()
         targetFolder = os.path.join(current_folder, 'download/#%s' % challenge_id)
@@ -552,7 +558,7 @@ class CrawlerScheduler(object):
             for aweme in aweme_list:
                 aweme['hostname'] = routre[0]
                 video_count += 1
-                self._join_download_queue(aweme, targetFolder,challenge_id)
+                self._joinDownloadQueue(aweme, targetFolder,challenge_id)
             if contentJson.get('has_more'):
                 cursor = contentJson.get('cursor')
             else:
@@ -562,7 +568,7 @@ class CrawlerScheduler(object):
     """
     下载音乐媒体
     """
-    def _download_music_media(self, music_id, url):
+    def _downloadMusicMedia(self, music_id, url):
         if not music_id : return
         current_folder = os.getcwd()
         targetFolder = os.path.join(current_folder, 'download/@%s' % music_id)
@@ -597,7 +603,7 @@ class CrawlerScheduler(object):
             for aweme in aweme_list:
                 aweme['hostname'] = routre[0]
                 video_count += 1
-                self._join_download_queue(aweme,targetFolder)
+                self._joinDownloadQueue(aweme,targetFolder)
             if contentJson.get('has_more'):
                 cursor = contentJson.get('cursor')
             else:

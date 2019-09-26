@@ -26,7 +26,7 @@ class QiniuYun(object):
     # 返回：
     # return:out--  obejct : content
     # ---------------------------------------------------
-    # 日期:2018.01.12  Add by zwx
+    # 日期:2019.09.09  Add by zwx
     #####################################################
     """
     def __getToken(self,bucketName):
@@ -44,7 +44,7 @@ class QiniuYun(object):
     # 返回：
     # return:out--  obejct : content
     # ---------------------------------------------------
-    # 日期:2018.01.12  Add by zwx
+    # 日期:2019.09.09  Add by zwx
     #####################################################
     """
     def uploadFile(self,key,fileDir):
@@ -70,7 +70,7 @@ class QiniuYun(object):
     # 返回：
     # return:out--  obejct : content
     # ---------------------------------------------------
-    # 日期:2018.01.12  Add by zwx
+    # 日期:2019.09.09  Add by zwx
     #####################################################
     """
     def fetchFile(self,key,fileUrl):
@@ -94,7 +94,7 @@ class QiniuYun(object):
     # 返回：
     # return:out--  obejct : content
     # ---------------------------------------------------
-    # 日期:2018.01.12  Add by zwx
+    # 日期:2019.09.09  Add by zwx
     #####################################################
     """
     def changeImage(self,key):
