@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 import pymysql
 import datetime
-from Single import Singleton
 
 """
 # --------------------------------------------------
@@ -13,8 +12,6 @@ from Single import Singleton
 # --------------------------------------------------
 """
 class  DBase(object):
-    #.设置类型
-    __metaclass__ = Singleton
 
     #.定义链接对象
     dbConn = None
@@ -69,12 +66,8 @@ class  DBase(object):
         try:
             cur.execute(self.__getInsertStr(tableName,mapx))
             self.dbConn.commit()
-            insertId = cur.lastrowid
-            print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']  INSERT VIDEO ID:' + str(insertId)
             cur.close()
-            data = mapx.copy()
-            data['id'] = insertId
-            return data
+            return mapx
         except:
             cur.close()
         finally:
@@ -177,14 +170,11 @@ class  DBase(object):
         vals = []
         i = 0
         for x in mapx:
-            if x == 'id' : continue
             keys.append('`' + x + '`')
             if type(mapx[x]) == int :
                 vals.append("'" + str(mapx[x]) + "'")
             elif type(mapx[x]) == None :
                 vals.append('NULL')
-            elif type(mapx[x]) == unicode :
-                vals.append("'" + mapx[x].encode(encoding='utf-8') + "'")
             elif type(mapx[x]) == float :
                 vals.append("'" + str(mapx[x]) + "'")
             elif type(mapx[x]) == str :
@@ -201,16 +191,16 @@ class  DBase(object):
         valueStr=''
         for x in where:
             if wi!=0 :
-                whereStr += ' AND ' + str(x) + "=" + "'" + str(where[x].encode(encoding='utf-8')) + "'"
+                whereStr += ' AND ' + str(x) + "=" + "'" + str(where[x]) + "'"
             else :
-                whereStr += str(x) + "=" + "'" + str(where[x].encode(encoding='utf-8')) + "'"
+                whereStr += str(x) + "=" + "'" + str(where[x]) + "'"
             wi=wi+1
         wi=0
         for x in valuex:
             if wi!=0 :
-                valueStr += ','+str(x) +"="+"'"+str(valuex[x].encode(encoding='utf-8'))+"'"
+                valueStr += ','+str(x) +"="+"'"+str(valuex[x])+"'"
             else :
-                valueStr += str(x) + "=" + "'" + str(valuex[x].encode(encoding='utf-8')) + "'"
+                valueStr += str(x) + "=" + "'" + str(valuex[x]) + "'"
             wi=wi+1
         return sql.replace('@where', whereStr).replace('@value', valueStr)
 
@@ -223,7 +213,7 @@ class  DBase(object):
         whereStr = ''
         for x in where:
             if wi!=0 :
-                whereStr += '   AND    '+str(x) +"="+"'"+str(where[x])+"'"
+                whereStr += ' AND '+str(x) +"="+"'"+str(where[x])+"'"
             else :
                 whereStr += str(x) + "=" + "'" + str(where[x]) + "'"
             wi = wi+1
