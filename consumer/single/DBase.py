@@ -8,7 +8,7 @@ import datetime
 # --------------------------------------------------
 # 描述：爬虫数据库基础操作类
 # --------------------------------------------------
-# 时间：2019-01-01
+# 时间：2019-09-09
 # --------------------------------------------------
 """
 class  DBase(object):
@@ -64,7 +64,8 @@ class  DBase(object):
     def INSERT(self,tableName,mapx):
         cur = self.dbConn.cursor()
         try:
-            cur.execute(self.__getInsertStr(tableName,mapx))
+            sql = self.__getInsertStr(tableName,mapx)
+            cur.execute(sql)
             self.dbConn.commit()
             cur.close()
             return mapx
@@ -95,7 +96,7 @@ class  DBase(object):
         try:
             cur.execute(self.__getUpdateStr(tableName,where,data))
             self.dbConn.commit()
-            result=cur.fetchone()
+            result = cur.fetchone()
             cur.close()
             return result
         except:
@@ -124,7 +125,7 @@ class  DBase(object):
         try:
             cur.execute(self.__getDeleteStr(tableName,where))
             self.dbConn.commit()
-            result=cur.fetchone()
+            result = cur.fetchone()
             cur.close()
             return result
         except:
@@ -155,6 +156,34 @@ class  DBase(object):
             result = cur.fetchall()
             cur.close()
             return  result
+        except:
+            cur.close()
+            return []
+        finally:
+            pass
+
+    """
+    #####################################################
+    # 方法: DBase : select
+    # --------------------------------------------------
+    # 描述: 数据库查询方法
+    # --------------------------------------------------
+    # 参数:
+    # param1:in--   String : sqlStr : 查询语句
+    # --------------------------------------------------
+    # 返回：
+    # return:out--  Array : result : 结果集
+    # --------------------------------------------------
+    # 日期:2019.09.09  Add by zwx
+    #####################################################
+    """
+    def EXECUTE(self,sqlStr):
+        cur = self.dbConn.cursor()
+        try:
+            cur.execute(sqlStr)
+            self.dbConn.commit()
+            cur.close()
+            return []
         except:
             cur.close()
             return []

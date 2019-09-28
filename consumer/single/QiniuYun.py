@@ -1,11 +1,26 @@
 # -*- coding:utf-8 -*-
 #-引入依赖
 from qiniu import Auth,put_file,etag,BucketManager
+
+"""
+# --------------------------------------------------
+# 作者：Mr.z@<837045534@qq.com>
+# --------------------------------------------------
+# 描述：七牛云操作类
+# --------------------------------------------------
+# 时间：2019-09-09
+# --------------------------------------------------
+"""
 class QiniuYun(object):
+
     ress  = object
+
     auth  = object
+
     name  = ''
+
     hash  = ''
+
     """
     # 初始化方法
     """
@@ -31,6 +46,7 @@ class QiniuYun(object):
     """
     def __getToken(self,bucketName):
         self.hash = self.auth.upload_token(bucketName)
+
     """
     #####################################################
     # 方法: QiniuYun : uploadFile
@@ -57,6 +73,7 @@ class QiniuYun(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法: QiniuYun : fetchFile
@@ -82,6 +99,7 @@ class QiniuYun(object):
             return None
         finally:
             pass
+
     """
     #####################################################
     # 方法: QiniuYun : changeImage
