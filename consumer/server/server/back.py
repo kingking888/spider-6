@@ -33,8 +33,8 @@ def updateMongo():
     data = dbase.SELECT("SELECT  COUNT(1) NUM,user_nickname,user_pic,CONCAT('user_pic_image_',`hash`) "
                         "FROM    t_video "
                         "WHERE   INSTR(user_pic,'https:') > 0 "
-                        "GROUP   BY user_nickname ORDER BY NUM DESC LIMIT 0,1000"
-    );
+                        "GROUP   BY user_nickname ORDER BY NUM DESC LIMIT 0,300"
+    )
     for x in data :
         result = Qiniu.fetchFile(x[3],x[2])
         if result != None and result['fsize'] > 0 :
