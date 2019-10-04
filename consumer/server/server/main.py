@@ -7,6 +7,10 @@ from systems.Mongo     import Mongo
 from services.Funny    import Funny
 from librarys.QiniuYun import QiniuYun
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 """
 加载数据库配置文件
 """
@@ -31,4 +35,4 @@ funny = Funny(funny,dbase,mongo,fetch,Qiniu,config)
 抓取标签文件
 """
 
-funny.getTagVideoList(100000,300000)
+funny.getTagVideoList(0,1)

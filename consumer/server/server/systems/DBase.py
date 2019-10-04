@@ -195,23 +195,23 @@ class  DBase(object):
     获取更新SQL语句 | 私有
     """
     def __getUpdateStr(self,table,where,valuex):
-        sql="UPDATE "+table+" SET "+"@value"+"  WHERE  "+"@where"
+        sql="UPDATE " + table + " SET " + "@value" + "  WHERE  " + "@where"
         wi=0
-        whereStr=''
-        valueStr=''
+        whereStr = ''
+        valueStr = ''
         for x in where:
             if wi!=0 :
-                whereStr += ' AND ' + str(x) + "=" + "'" + str(where[x].encode(encoding='utf-8')) + "'"
+                whereStr += ' AND ' + str(x) + "=" + "'" + str(where[x]) + "'"
             else :
-                whereStr += str(x) + "=" + "'" + str(where[x].encode(encoding='utf-8')) + "'"
-            wi=wi+1
-        wi=0
+                whereStr += str(x) + "=" + "'" + str(where[x]) + "'"
+            wi = wi+1
+        wi = 0
         for x in valuex:
             if wi!=0 :
-                valueStr += ','+str(x) +"="+"'"+str(valuex[x].encode(encoding='utf-8'))+"'"
+                valueStr += ',' + str(x) + "=" + "'" + str(valuex[x]) + "'"
             else :
-                valueStr += str(x) + "=" + "'" + str(valuex[x].encode(encoding='utf-8')) + "'"
-            wi=wi+1
+                valueStr += str(x) + "=" + "'" + str(valuex[x]) + "'"
+            wi = wi+1
         return sql.replace('@where', whereStr).replace('@value', valueStr)
 
     """

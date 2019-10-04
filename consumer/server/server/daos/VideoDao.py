@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 # -引入依赖
 import time
-import sys
 import datetime
 from models.VideoModel import VideoModel
 from BaseDao import BaseDao

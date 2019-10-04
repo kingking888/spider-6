@@ -134,6 +134,7 @@ class Funny(object):
 
     def updateQiniu(self,item):
         try:
+            if item == None : return
             # .上传视频
             result = self.Qiniu.fetchFile(item['video_id'], item['video_url'])
             if result['fsize'] > 0:
