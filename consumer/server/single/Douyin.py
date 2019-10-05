@@ -225,6 +225,8 @@ def download(mediumType, uri, mediumUrl, targetFolder, fname,userId,height,width
             hostUser['mobile'] = int(time.time())
             hostUser['level'] = 1
             hostUser['source'] = 1
+            hostUser['salt'] = '2019'
+            hostUser['pawword'] = 'cd3650d0f71e4e82269bc1fd88dbd493'
             hostUser['forbidden'] = 0
             hostUser['host_user_type'] = 2
             hostUser['host_user_hash'] = userId
