@@ -18,21 +18,21 @@ QINIU_USER_CONF = {
 QINIU_LIVE_CONF = {
     "accessKey"    : "jA9IXMBf5nYpMPU4nDoL4GzS_QbEgaeXlSY8FTzz",
     "secretKey"    : "LG89eWSHaUxEvK6Bkt2YBLezqyYmWM3DgRKvdaUt",
-    "bucketName"   : "7wonders",
-    "resDomain"    : "http://7wonders.static.shopshops.top/"
+    "bucketName"   : "shopshops",
+    "resDomain"    : "https://static.shopshopslive.com/"
 }
 
 DB_LIVE_CONF = {
     "userName": "ssadmin",
     "passWord": "shopshops@china2017",
-    "localHost": "rm-2ze8stl04io5382803o.mysql.rds.aliyuncs.com",
+    "localHost": "rm-2zek05a0a665a38q45o.mysql.rds.aliyuncs.com",
     "dataName": "live"
 }
 
 DB_USER_CONF = {
     "userName": "ssadmin",
     "passWord": "shopshops@china2017",
-    "localHost": "rm-2ze8stl04io5382803o.mysql.rds.aliyuncs.com",
+    "localHost": "rm-2zek05a0a665a38q45o.mysql.rds.aliyuncs.com",
     "dataName": "users"
 }
 

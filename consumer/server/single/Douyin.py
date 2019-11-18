@@ -13,7 +13,7 @@ import time
 from bson import ObjectId
 from lxml import etree
 from QiniuYun import QiniuYun
-from DBase import  DBase
+from DBase import DBase
 
 import Conf
 
@@ -26,7 +26,6 @@ DBL = DBase(Conf.DB_LIVE_CONF)
 QNU = QiniuYun(Conf.QINIU_USER_CONF)
 
 DBU = DBase(Conf.DB_USER_CONF)
-
 
 """
 #####################################################
@@ -44,6 +43,8 @@ DBU = DBase(Conf.DB_USER_CONF)
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
+
+
 def getHTML(url):
     try:
         contents = requests.get(url, Conf.HEADERS).content
@@ -70,10 +71,13 @@ def getHTML(url):
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
+
+
 def load(jsonDir):
     with open(jsonDir) as json_file:
         data = json.load(json_file)
         return data
+
 
 """
 #####################################################
@@ -90,14 +94,17 @@ def load(jsonDir):
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
+
+
 def checkVideo(awemeId):
     num = 0
     for x in DBL.SELECT("SELECT COUNT(1) NUM "
                         "  FROM video "
-                        " WHERE video_source = 2 AND hash='%s'" % str(awemeId)) :
-        for i in x :
+                        " WHERE video_source = 1 AND hash='%s'" % str(awemeId)):
+        for i in x:
             num = i
     return True if num > 0 else False
+
 
 """
 #####################################################
@@ -114,15 +121,18 @@ def checkVideo(awemeId):
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
-def checkUser(userId) :
+
+
+def checkUser(userId):
     id = ''
     for x in DBU.SELECT("SELECT id  "
                         "FROM   host_user "
                         "WHERE  host_user_type IS NOT NULL AND host_user_type = 2 AND host_user_hash='%s'  "
-                        "LIMIT  0,1 " % str(userId)) :
-        for i in x :
+                        "LIMIT  0,1 " % str(userId)):
+        for i in x:
             id = i
     return id if len(str(id)) > 0 else ''
+
 
 """
 #####################################################
@@ -139,10 +149,12 @@ def checkUser(userId) :
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
-def insertVideo(userId,fname,uri,cover,awemeId,height,width,size,filePath,dytk,mongoId):
+
+
+def insertVideo(userId, fname, uri, cover, awemeId, height, width, size, filePath, dytk, mongoId):
     result = QNL.uploadFile(uri, filePath)
     """先上传文件 | 后插入数据 | 最后删除文件"""
-    if result != None and len(result['key']) :
+    if result != None and len(result['key']):
         """数据库插入"""
         fiexd = {}
         fiexd['id'] = str(ObjectId())
@@ -162,7 +174,7 @@ def insertVideo(userId,fname,uri,cover,awemeId,height,width,size,filePath,dytk,m
         fiexd['width'] = width
         fiexd['video_size'] = size
         fiexd['video_duration'] = 15
-        fiexd['video_source'] = 2
+        fiexd['video_source'] = 1
         fiexd['video_nature'] = userId
         fiexd['deleted'] = 0
         fiexd['create_time'] = int(time.time()) * 1000
@@ -170,29 +182,30 @@ def insertVideo(userId,fname,uri,cover,awemeId,height,width,size,filePath,dytk,m
         fiexd['remark'] = ""
         fiexd['version'] = 1
         DBL.INSERT('video', fiexd)
-        if os.path.exists(filePath) :
+        if os.path.exists(filePath):
             print("[" + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] 删除本地的视频： %s" % str(filePath))
             os.remove(filePath)
-        #.先更新视频，封面如果失败，可以取首帧图
+        # .先更新视频，封面如果失败，可以取首帧图
         DBL.UPDATE('video', {'id': fiexd['id']}, {
             'update_time': int(time.time()) * 1000,
             'video_url': Conf.QINIU_LIVE_CONF['resDomain'] + result['key']
         })
         # .上传封面
         retImg = QNL.fetchFile('cover_image_' + uri, cover)
-        #. 补偿机制
+        # . 补偿机制
         if retImg != None and retImg['fsize'] > 0:
             DBL.UPDATE('video', {'id': fiexd['id']}, {
                 'cover_pic_url': Conf.QINIU_LIVE_CONF['resDomain'] + 'cover_image_' + uri +
                                  '?imageView2/1/format/png',
-                'cover_pic_key' : uri + '?imageView2/1/format/png'
+                'cover_pic_key': uri + '?imageView2/1/format/png'
             })
-        else :
+        else:
             DBL.UPDATE('video', {'id': fiexd['id']}, {
                 'cover_pic_key': result['key'] + '?vframe/jpg/offset/1',
                 'cover_pic_url': Conf.QINIU_LIVE_CONF['resDomain'] + result['key'] +
                                  '?vframe/jpg/offset/1'
             })
+
 
 """
 #####################################################
@@ -209,7 +222,9 @@ def insertVideo(userId,fname,uri,cover,awemeId,height,width,size,filePath,dytk,m
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
-def download(mediumType, uri, mediumUrl, targetFolder, fname,userId,height,width,cover,awemeId,dytk):
+
+
+def download(mediumType, uri, mediumUrl, targetFolder, fname, userId, height, width, cover, awemeId, dytk):
     try:
         mongoId = checkUser(userId)
         if mongoId == '':
@@ -275,7 +290,7 @@ def download(mediumType, uri, mediumUrl, targetFolder, fname,userId,height,width
             f.write(resp.content)
         print("[" + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] 成功下载的视频： %s" % uri)
         f.close()
-        insertVideo(userId, fname, uri, cover, awemeId, height, width, size, filePath, dytk,mongoId)
+        insertVideo(userId, fname, uri, cover, awemeId, height, width, size, filePath, dytk, mongoId)
         print("[" + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] 已经上传的视频： %s" % uri)
         retry_times += 1
         """小憩一秒"""
@@ -283,6 +298,7 @@ def download(mediumType, uri, mediumUrl, targetFolder, fname,userId,height,width
     except BaseException as e:
         raise e
     return None
+
 
 """
 #####################################################
@@ -299,10 +315,13 @@ def download(mediumType, uri, mediumUrl, targetFolder, fname,userId,height,width
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
+
+
 def getRealAddress(url):
     if url.find('v.douyin.com') < 0: return url
     res = requests.get(url, headers=Conf.HEADERS, allow_redirects=False)
     return res.headers['Location'] if res.status_code == 302 else None
+
 
 """
 #####################################################
@@ -319,11 +338,13 @@ def getRealAddress(url):
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
+
+
 def getDytk(url):
     res = requests.get(url, headers=Conf.HEADERS)
     if not res: return None
     dytk = re.findall("dytk: '(.*)'", res.content.decode('utf-8'))
-    uimg = re.findall('<img class="avatar" src="(.*)"> </span>',res.content.decode('utf-8'))
+    uimg = re.findall('<img class="avatar" src="(.*)"> </span>', res.content.decode('utf-8'))
     name = re.findall('<p class="nickname">(.*)</p><p class="shortid">', res.content.decode('utf-8'))
     desc = re.findall('<p class="signature">(.*)</p><p class="follow-info">', res.content.decode('utf-8'))
     if len(desc) <= 0:
@@ -332,12 +353,13 @@ def getDytk(url):
         retImg = QNU.fetchFile('user_pic_image_' + dytk[0], uimg[0])
         if retImg['fsize'] > 0:
             return {
-                'dytk':dytk[0],
-                'name':name[0],
-                'desc':desc[0],
-                'uimg':'user_pic_image_' + dytk[0]
+                'dytk': dytk[0],
+                'name': name[0],
+                'desc': desc[0],
+                'uimg': 'user_pic_image_' + dytk[0]
             }
     return None
+
 
 """
 #####################################################
@@ -354,6 +376,8 @@ def getDytk(url):
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
+
+
 def usage():
     print(u"未找到u.txt文件，请创建.\n"
           u"请在文件中指定抖音分享页面URL，并以 逗号/空格/tab/表格鍵/回车符 分割，支持多行.\n"
@@ -361,6 +385,7 @@ def usage():
           u"例子: url1,url12\n\n"
           u"或者直接使用命令行参数指定站点\n"
           u"例子: python amemv-video-ripper.py url1,url2")
+
 
 """
 #####################################################
@@ -377,6 +402,8 @@ def usage():
 # 日期:2019.09.09  Add by zwx
 #####################################################
 """
+
+
 def parseSites(fileName):
     with open(fileName, "rb") as f:
         txt = f.read().rstrip().lstrip()
@@ -390,6 +417,7 @@ def parseSites(fileName):
             numbers.append(site)
     return numbers
 
+
 """
 # --------------------------------------------------
 # 作者：Mr.z@<837045534@qq.com>
@@ -399,6 +427,8 @@ def parseSites(fileName):
 # 时间：2019-09-09
 # --------------------------------------------------
 """
+
+
 class CoreSpider(object):
 
     def __init__(self, items):
@@ -429,6 +459,7 @@ class CoreSpider(object):
     """
     启动程序
     """
+
     def scheduling(self):
         for url in self.numbers: self.downloadUserVideos(url)
         for url in self.challenges: self.downloadChallengeVideos(url)
@@ -437,6 +468,7 @@ class CoreSpider(object):
     """
     下载用户VIDEO
     """
+
     def downloadUserVideos(self, url):
         number = re.findall(r'share/user/(\d+)', url)
         if not len(number): return
@@ -444,11 +476,12 @@ class CoreSpider(object):
         print("[" + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] 已经获取的口令： \n%s" % str(data))
         if not data['dytk']: return
         user_id = number[0]
-        self._downloadUserMedia(user_id,data,url)
+        self._downloadUserMedia(user_id, data, url)
 
     """
     下载合拍视频
     """
+
     def downloadChallengeVideos(self, url):
         challenge = re.findall('share/challenge/(\d+)', url)
         if not len(challenge): return
@@ -458,6 +491,7 @@ class CoreSpider(object):
     """
     下载音乐视频
     """
+
     def downloadMusicVideos(self, url):
         music = re.findall('share/music/(\d+)', url)
         if not len(music): return
@@ -467,14 +501,15 @@ class CoreSpider(object):
     """
     放入下载队列 | 已经改为顺序执行
     """
-    def _joinDownloadQueue(self, aweme,targetFolder,userId,dytk):
+
+    def _joinDownloadQueue(self, aweme, targetFolder, userId, dytk):
         try:
             if aweme.get('video', None):
-                uri     = aweme['video']['play_addr']['uri']
-                fname   = aweme['share_info']['share_desc']
-                height  = aweme['video']['height']
-                width   = aweme['video']['width']
-                cover   = aweme['video']['cover']['url_list'][0]
+                uri = aweme['video']['play_addr']['uri']
+                fname = aweme['share_info']['share_desc']
+                height = aweme['video']['height']
+                width = aweme['video']['width']
+                cover = aweme['video']['cover']['url_list'][0]
                 awemeId = aweme['aweme_id']
                 if fname.strip() == '':
                     fname = aweme['video']['play_addr']['uri']
@@ -483,13 +518,14 @@ class CoreSpider(object):
                                "improve_bitrate=0&logo_name=aweme_self" % uri
                 if aweme.get('hostname') == 't.tiktok.com':
                     download_url = 'http://api.tiktokv.com/aweme/v1/play/?{0}'
-                download('video',uri,download_url,targetFolder,fname,userId,height,width,cover,awemeId,dytk)
+                download('video', uri, download_url, targetFolder, fname, userId, height, width, cover, awemeId, dytk)
         except BaseException as e:
             raise e
 
     """
     下载其他媒体
     """
+
     def __downloadFavoriteMedia(self, user_id, dytk, hostname, signature, favorite_folder, video_count):
         if not os.path.exists(favorite_folder):
             os.makedirs(favorite_folder)
@@ -521,10 +557,10 @@ class CoreSpider(object):
                 break
         return video_count
 
-
     """
     下载用户媒体
     """
+
     def _downloadUserMedia(self, user_id, dytk, url):
         current_folder = os.getcwd()
         targetFolder = os.path.join(current_folder, 'download/%s' % user_id)
@@ -532,7 +568,7 @@ class CoreSpider(object):
             os.mkdir(targetFolder)
         if not user_id:
             return
-        routre = str(url).replace('https://','').replace('http://','').split('/')
+        routre = str(url).replace('https://', '').replace('http://', '').split('/')
         signature = self.generateSignature(str(user_id))
         user_video_url = "https://%s/aweme/v1/aweme/post/" % routre[0]
         user_video_params = {
@@ -546,30 +582,28 @@ class CoreSpider(object):
         max_cursor, video_count = None, 0
         while True:
             res = requests.get(user_video_url, headers=Conf.HEADERS, params=user_video_params)
-            if max_cursor :
+            if max_cursor:
                 user_video_params['max_cursor'] = str(max_cursor)
             contentJson = json.loads(res.content.decode('utf-8'))
             aweme_list = contentJson.get('aweme_list', [])
-            if len(aweme_list) <= 0 : continue
+            if len(aweme_list) <= 0: continue
             print("[" + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "] 已经获取的数据： %s" % str(
                 len(aweme_list)
             ) + "个视频资源")
             for aweme in aweme_list:
-                self._joinDownloadQueue(aweme, targetFolder,user_id,dytk)
-            break
-            """
-            if contentJson.get('has_more'):
-                max_cursor = contentJson.get('max_cursor')
-            else:
-                break
-            """
+                self._joinDownloadQueue(aweme, targetFolder, user_id, dytk)
+                if contentJson.get('has_more'):
+                    max_cursor = contentJson.get('max_cursor')
+                else:
+                    break
         return video_count
 
     """
     下载挑战媒体
     """
+
     def _downloadChallengeMedia(self, challenge_id, url):
-        if not challenge_id : return
+        if not challenge_id: return
         current_folder = os.getcwd()
         targetFolder = os.path.join(current_folder, 'download/#%s' % challenge_id)
         if not os.path.isdir(targetFolder):
@@ -601,7 +635,7 @@ class CoreSpider(object):
             for aweme in aweme_list:
                 aweme['hostname'] = routre[0]
                 video_count += 1
-                self._joinDownloadQueue(aweme, targetFolder,challenge_id)
+                self._joinDownloadQueue(aweme, targetFolder, challenge_id)
             if contentJson.get('has_more'):
                 cursor = contentJson.get('cursor')
             else:
@@ -611,11 +645,12 @@ class CoreSpider(object):
     """
     下载音乐媒体
     """
+
     def _downloadMusicMedia(self, music_id, url):
-        if not music_id : return
+        if not music_id: return
         current_folder = os.getcwd()
         targetFolder = os.path.join(current_folder, 'download/@%s' % music_id)
-        if not os.path.isdir(targetFolder) : os.mkdir(targetFolder)
+        if not os.path.isdir(targetFolder): os.mkdir(targetFolder)
         routre = str(url).replace('https://', '').replace('http://', '').split('/')
         signature = self.generateSignature(str(music_id))
         music_video_url = "https://%s/aweme/v1/music/aweme/?{0}" % routre[0]
@@ -646,7 +681,7 @@ class CoreSpider(object):
             for aweme in aweme_list:
                 aweme['hostname'] = routre[0]
                 video_count += 1
-                self._joinDownloadQueue(aweme,targetFolder)
+                self._joinDownloadQueue(aweme, targetFolder)
             if contentJson.get('has_more'):
                 cursor = contentJson.get('cursor')
             else:
@@ -665,7 +700,7 @@ if __name__ == "__main__":
 
     if not args:
         filename = "share-url.txt"
-        if os.path.exists(filename) :
+        if os.path.exists(filename):
             content = parseSites(filename)
         else:
             usage()
